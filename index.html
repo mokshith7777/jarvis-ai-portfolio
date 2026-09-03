@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JARVIS AI Portfolio - Cinematic 3D Background</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0a1a;
+      --bg-charcoal: #1a1a2e;
+      --neon-red: #FF1238;
+      --neon-blue: #27DFFF;
+      --neon-green: #48FF82;
+      --white: #ffffff;
+      --glass: rgba(17, 17, 27, 0.8);
+      --glow-radius: 20px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Orbitron', monospace;
+      background: var(--bg-deep);
+      color: var(--white);
+      overflow: hidden;
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      perspective: 1200px;
+    }
+    
+    /* Road surface */
+    .road {
+      position: absolute;
+      bottom: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 28px;
+      background: linear-gradient(90deg, #1a1a2e 0%, #0d0d1a 50%, #1a1a2e 100%);
+      border-radius: 4px 4px 2px 2px;
+      box-shadow: 
+        0 0 20px rgba(255, 18, 56, 0.3),
+        0 0 40px rgba(255, 18, 56, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .road-lines {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    .line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent 0%, #fff 50%, transparent 100%);
+      width: 8px;
+      height: 100%;
+      left: 50%;
+      margin-left: -4px;
+      animation: dash 1.5s infinite;
+    }
+    
+    .line-1 { animation-direction: alternate; animation-delay: 0s; }
+    .line-2 { animation-direction: alternate; animation-delay: 0.4s; }
+    .line-3 { animation-direction: alternate; animation-delay: 0.8s; }
+    
+    @keyframes dash {
+      0% { left: 50%; opacity: 0; }
+      50% { left: 50%; opacity: 1; }
+      100% { left: 110%; opacity: 0; }
+    }
+    
+    /* Fog layers */
+    .fog-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .fog-volumetric {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: drift 20s infinite alternate ease-in-out;
+    }
+    
+    .fog-1 {
+      left: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: radial-gradient(circle, rgba(255, 18, 56, 0.15) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    
+    .fog-2 {
+      left: 50%;
+      top: -100px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(39, 223, 255, 0.12) 0%, transparent 70%);
+      animation-delay: 7s;
+    }
+    
+    .fog-3 {
+      right: -150px;
+      bottom: -150px;
+      background: radial-gradient(circle, rgba(72, 255, 130, 0.1) 0%, transparent 70%);
+      animation-delay: 14s;
+    }
+    
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, 30px) scale(1.05); }
+    }
+    
+    /* Energy particles */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--neon-red);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--neon-red), 0 0 16px rgba(255, 18, 56, 0.5);
+      animation: float 8s infinite alternate ease-in-out;
+    }
+    
+    .particle-blue {
+      background: var(--neon-blue);
+      box-shadow: 0 0 8px var(--neon-blue), 0 0 16px rgba(39, 223, 255, 0.5);
+    }
+    
+    .particle-green {
+      background: var(--neon-green);
+      box-shadow: 0 0 8px var(--neon-green), 0 0 16px rgba(72, 255, 130, 0.5);
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+      100% { transform: translateY(-30px) translateX(30px); opacity: 0.4; }
+    }
+    
+    /* Tree elements */
+    .tree {
+      position: absolute;
+      left: 50%;
+      top: 20%;
+      transform: translateX(-50%) rotate(var(--rotate));
+      animation: sway 20s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 8px rgba(39, 223, 255, 0.3));
+    }
+    
+    .tree-trunk {
+      width: 12px;
+      height: 40px;
+      background: linear-gradient(180deg, #2c2c3e 0%, #1a1a2e 100%);
+      border-radius: 6px 6px 2px 2px;
+    }
+    
+    .tree-foliage {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 16px solid #1a3a2a;
+      border-right: 16px solid #1a3a2a;
+      border-bottom: 28px solid #2d5a3a;
+      margin-left: -16px;
+      margin-bottom: -28px;
+    }
+    
+    @keyframes sway {
+      0% { transform: rotate(-8deg) translateX(-50%); }
+      100% { transform: rotate(8deg) translateX(-50%); }
+    }
+    
+    /* Moon / key light */
+    .moon {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e0e0e0 50%, #a0a0a0 100%);
+      box-shadow: 0 0 60px 30px rgba(255, 255, 255, 0.4), 0 0 100px 50px rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Energy cores in fog */
+    .energy-core {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      filter: blur(8px);
+      animation: pulse 2s infinite alternate ease-in-out;
+    }
+    
+    .core-red { background: var(--neon-red); box-shadow: 0 0 20px var(--neon-red); animation-delay: 0s; }
+    .core-blue { background: var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue); animation-delay: 0.5s; }
+    .core-green { background: var(--neon-green); box-shadow: 0 0 20px var(--neon-green); animation-delay: 1s; }
+    .core-white { background: var(--white); box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.6); animation-delay: 1.5s; }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.3); opacity: 0.7; }
+    }
+    
+    /* Road glow */
+    .road-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 4px 4px 2px 2px;
+      box-shadow: 0 0 10px rgba(255, 18, 56, 0.15), 0 0 20px rgba(39, 223, 255, 0.1), 0 0 30px rgba(72, 255, 130, 0.1);
+    }
+    
+    /* Atmospheric gradient */
+    .atmosphere-gradient {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: 
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(39, 223, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255, 18, 56, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    /* UI overlay container */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .fog-volumetric { animation: none; }
+      .line { animation: none; line-height: 28px; background: #fff; width: 2px; }
+      .tree { animation: none; rotate: 0deg; }
+      .particle { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Atmospheric gradient -->
+  <div class="atmosphere-gradient"></div>
+  
+  <!-- Fog layers -->
+  <div class="fog-layer">
+    <div class="fog-volumetric fog-1 core-red"></div>
+    <div class="fog-volumetric fog-2 core-blue"></div>
+    <div class="fog-volumetric fog-3 core-green"></div>
+  </div>
+  
+  <!-- Energy particles -->
+  <div class="fog-layer">
+    <div class="particle" style="left: 15%; top: 40%; animation-duration: 6s;"></div>
+    <div class="particle particle-blue" style="left: 70%; top: 30%; animation-duration: 9s;"></div>
+    <div class="particle particle-green" style="left: 30%; top: 70%; animation-duration: 7s;"></div>
+    <div class="particle" style="left: 90%; top: 50%; animation-duration: 11s;"></div>
+    <div class="particle particle-blue" style="left: 25%; top: 20%; animation-duration: 8s;"></div>
+    <div class="particle particle-green" style="left: 65%; top: 80%; animation-duration: 10s;"></div>
+  </div>
+  
+  <!-- Energy cores in fog -->
+  <div class="fog-layer">
+    <div class="energy-core core-red"></div>
+    <div class="energy-core core-blue" style="left: 60%; top: 40%;"></div>
+    <div class="energy-core core-green" style="left: 80%; top: 60%;"></div>
+    <div class="energy-core core-white" style="left: 30%; top: 30%;"></div>
+  </div>
+  
+  <!-- Road -->
+  <div class="road">
+    <div class="road-glow"></div>
+    <div class="road-lines">
+      <div class="line line-1"></div>
+      <div class="line line-2"></div>
+      <div class="line line-3"></div>
+    </div>
+  </div>
+  
+  <!-- Trees -->
+  <div class="fog-layer" style="top: 20%;">
+    <div class="tree" style="--rotate: -20deg;">
+      <div class="tree-trunk"></div>
+      <div class="tree-foliage"></div>
+    </div>
+    <div class="tree" style="--rotate: 35deg; left: 70%; top: 35%; animation-delay: 5s;">
+      <div class="tree-trunk"></div>
+      <div class="tree-foliage"></div>
+    </div>
+    <div class="tree" style="--rotate: 15deg; left: 25%; top: 50%; animation-delay: 3s;">
+      <div class="tree-trunk"></div>
+      <div class="tree-foliage"></div>
+    </div>
+    <div class="tree" style="--rotate: -30deg; left: 85%; top: 60%; animation-delay: 7s;">
+      <div class="tree-trunk"></div>
+      <div class="tree-foliage"></div>
+    </div>
+  </div>
+  
+  <!-- Moon / key light -->
+  <div class="moon"></div>
+  
+  <!-- UI overlay (for JARVIS integration) -->
+  <div class="overlay">
+    <!-- JARVIS interface elements would go here -->
+  </div>
+  
+  <!-- Scroll indicator -->
+  <div style="
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: pulse-indicator 2s infinite;
+  ">
+    SCROLL TO EXPLORE
+  </div>
+
+  <script>
+  // Scroll-driven camera movement
+  let scrollPosition = 0;
+  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  
+  function updateBackground(scroll) {
+    const progress = scroll / maxScroll;
+    
+    // Camera moves forward along road
+    const cameraOffset = progress * 30;
+    
+    // Foggginess increases with scroll
+    const fogOpacity = progress * 0.5;
+    
+    // Energy sources fade in/out
+    const particles = document.querySelectorAll('.particle');
+    particles.forEach((p, i) => {
+      const visibility = 1 - Math.abs(progress - (i * 0.2));
+      p.style.opacity = Math.max(0, visibility);
+    }
+    
+    // Road curve becomes more visible
+    const road = document.querySelector('.road');
+    if (road) {
+      road.style.transform = 'translateX(-50%) translateY(' + (-15 + progress * 5) + '%)';
+    }
+    
+    // Tree positions shift slightly
+    const trees = document.querySelectorAll('.tree');
+    trees.forEach((t, i) => {
+      const treeOffset = progress * (i % 3 * 10);
+      t.style.transform = 'translateX(-50%) rotate(' + (i * 15) + 'deg) translateY(' + treeOffset + '%)';
+    }
+    
+    // Fog layers drift faster
+    const fogs = document.querySelectorAll('.fog-volumetric');
+    fogs.forEach((f, i) => {
+      f.style.transform = 'translate(+' + (progress * (i + 1) * 20) + 'px, 0)';
+    }
+    
+    // Color intensity increases
+    const root = document.documentElement;
+    root.style.setProperty('--neon-red-intensity', 0.3 + progress * 0.5);
+    root.style.setProperty('--neon-blue-intensity', 0.2 + progress * 0.4);
+    root.style.setProperty('--neon-green-intensity', 0.1 + progress * 0.3);
+  }
+  
+  // Initial update
+  updateBackground(0);
+  
+  // Scroll event
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        scrollPosition = window.scrollY;
+        updateBackground(scrollPosition);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  
+  // Handle resize
+  let resizeTicking = false;
+  window.addEventListener('resize', function() {
+    if (!resizeTicking) {
+      window.requestAnimationFrame(function() {
+        updateBackground(window.scrollY);
+        resizeTicking = false;
+      });
+      resizeTicking = true;
+    }
+  });
+  
+  // Reduced motion support
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.body.style.transition = 'none';
+  }
+  </script>
+</body>
+</html>
