@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JARVIS AI — Team Organization & Flow Chart</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    padding: 32px 40px;
+    border-bottom: 1px solid rgba(255,0,52,0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: 0.05em; }
+  .header h1 span { color: #FF0034; }
+  .header .sub { font-size: 0.85rem; opacity: 0.5; margin-top: 4px; }
+  .legend {
+    display: flex; gap: 24px; padding: 16px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; opacity: 0.7; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .flow-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    overflow-x: auto;
+  }
+  .flow-svg { max-width: 1100px; width: 100%; }
+  .roles-table {
+    padding: 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .role-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .role-card h3 { font-size: 1rem; margin-bottom: 8px; }
+  .role-card p { font-size: 0.8rem; opacity: 0.6; line-height: 1.6; }
+  .role-card .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px; }
+  .tag {
+    padding: 2px 8px; border-radius: 10px; font-size: 0.7rem;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1><span>JARVIS</span> AI — Team Organization</h1>
+    <div class="sub">Mokshith Reddy (CEO) · Hermes Agent (Manager) · Teams report via Telegram</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#FF0034"></div> Coding Team</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#00D4FF"></div> Video Team</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#FFD700"></div> Image Team</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#48FF82"></div> Research Team</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fff"></div> Hermes (Manager)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#FF8C00"></div> CEO (You)</div>
+</div>
+
+<div class="flow-container">
+<svg class="flow-svg" viewBox="0 0 1050 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="rgba(255,255,255,0.3)"/>
+    </marker>
+    <filter id="glow-red"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow-blue"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow-gold"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow-green"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+
+  <!-- CEO NODE -->
+  <rect x="425" y="20" width="200" height="60" rx="12" fill="#FF8C00" opacity="0.9" filter="url(#glow-gold)"/>
+  <text x="525" y="44" text-anchor="middle" fill="#000" font-weight="800" font-size="14">🎯 CEO: Mokshith</text>
+  <text x="525" y="58" text-anchor="middle" fill="#000" font-size="11">Final Approver & Vision</text>
+
+  <!-- HERMES MANAGER -->
+  <rect x="400" y="110" width="250" height="55" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  <text x="525" y="133" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">🤖 HERMES (Manager)</text>
+  <text x="525" y="148" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11">Orchestrates · Delegates · Verifies</text>
+
+  <line x1="525" y1="165" x2="525" y2="200" stroke="rgba(255,255,255,0.2)" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- TASKS BAR -->
+  <rect x="50" y="200" width="950" height="50" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="525" y="220" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11" font-weight="600">PROJECT WORKFLOW PHASES</text>
+  <text x="525" y="235" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9">PLAN → BUILD → RENDER → DELIVER</text>
+
+  <!-- TEAMS ROW -->
+  <!-- Coding Team -->
+  <rect x="30" y="290" width="230" height="180" rx="14" fill="rgba(255,0,52,0.08)" stroke="#FF0034" stroke-width="1.5" filter="url(#glow-red)"/>
+  <text x="145" y="314" text-anchor="middle" fill="#FF0034" font-weight="800" font-size="13">💻 CODING TEAM</text>
+  <text x="145" y="330" text-anchor="middle" fill="rgba(255,0,52,0.5)" font-size="9">Frontend · Backend · Infra</text>
+
+  <text x="145" y="358" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">Sub-Agents:</text>
+  <text x="50" y="378" fill="rgba(255,255,255,0.5)" font-size="9">• Developer Agent</text>
+  <text x="50" y="393" fill="rgba(255,255,255,0.5)" font-size="9">• Code Reviewer</text>
+  <text x="50" y="408" fill="rgba(255,255,255,0.5)" font-size="9">• Bug Fixer</text>
+  <text x="50" y="423" fill="rgba(255,255,255,0.5)" font-size="9">• Claude Code Runner</text>
+
+  <text x="145" y="448" fill="rgba(255,255,255,0.4)" font-size="8">Current: index.html v9a5eceb</text>
+  <text x="145" y="462" fill="rgba(255,255,255,0.4)" font-size="8">255 scroll frames rendered</text>
+
+  <!-- Video Team -->
+  <rect x="290" y="290" width="230" height="180" rx="14" fill="rgba(0,212,255,0.08)" stroke="#00D4FF" stroke-width="1.5" filter="url(#glow-blue)"/>
+  <text x="405" y="314" text-anchor="middle" fill="#00D4FF" font-weight="800" font-size="13">🎬 VIDEO TEAM</text>
+  <text x="405" y="330" text-anchor="middle" fill="rgba(0,212,255,0.5)" font-size="9">HyperFrames · FFmpeg · Animate</text>
+
+  <text x="405" y="358" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">Sub-Agents:</text>
+  <text x="340" y="378" fill="rgba(255,255,255,0.5)" font-size="9">• Scroll Animation Agent</text>
+  <text x="340" y="393" fill="rgba(255,255,255,0.5)" font-size="9">• FFmpeg Renderer</text>
+  <text x="340" y="408" fill="rgba(255,255,255,0.5)" font-size="9">• Seedance 2.5 Agent</text>
+  <text x="340" y="423" fill="rgba(255,255,255,0.5)" font-size="9">• Higgsfield MCP Connector</text>
+
+  <text x="405" y="448" fill="rgba(255,255,255,0.4)" font-size="8">Current: 255 frames @ 1920x1080</text>
+  <text x="405" y="462" fill="rgba(255,255,255,0.4)" font-size="8">Gap: Image-to-video pipeline missing</text>
+
+  <!-- Image Team -->
+  <rect x="550" y="290" width="230" height="180" rx="14" fill="rgba(255,215,0,0.08)" stroke="#FFD700" stroke-width="1.5" filter="url(#glow-gold)"/>
+  <text x="665" y="314" text-anchor="middle" fill="#FFD700" font-weight="800" font-size="13">🎨 IMAGE TEAM</text>
+  <text x="665" y="330" text-anchor="middle" fill="rgba(255,215,0,0.5)" font-size="9">Seedream · Nano Banana · Design</text>
+
+  <text x="665" y="358" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">Sub-Agents:</text>
+  <text x="600" y="378" fill="rgba(255,255,255,0.5)" font-size="9">• Reference Image Agent</text>
+  <text x="600" y="393" fill="rgba(255,255,255,0.5)" font-size="9">• Seedance 2.5 Generator</text>
+  <text x="600" y="408" fill="rgba(255,255,255,0.5)" font-size="9">• Prompt Engineer</text>
+  <text x="600" y="423" fill="rgba(255,255,255,0.5)" font-size="9">• Design Reviewer</text>
+
+  <text x="665" y="448" fill="rgba(255,255,255,0.4)" font-size="8">Current: 255 frame JPGs (static)</text>
+  <text x="665" y="462" fill="rgba(255,255,255,0.4)" font-size="8">Gap: AI-generated hero images missing</text>
+
+  <!-- Research Team -->
+  <rect x="810" y="290" width="210" height="180" rx="14" fill="rgba(72,255,130,0.08)" stroke="#48FF82" stroke-width="1.5" filter="url(#glow-green)"/>
+  <text x="915" y="314" text-anchor="middle" fill="#48FF82" font-weight="800" font-size="13">🔬 RESEARCH TEAM</text>
+  <text x="915" y="330" text-anchor="middle" fill="rgba(72,255,130,0.5)" font-size="9">Competitors · Trends · References</text>
+
+  <text x="915" y="358" fill="rgba(255,255,255,0.8)" font-size="10" font-weight="600">Sub-Agents:</text>
+  <text x="845" y="378" fill="rgba(255,255,255,0.5)" font-size="9">• YouTube Analyzer</text>
+  <text x="845" y="393" fill="rgba(255,255,255,0.5)" font-size="9">• Competitor Tracker</text>
+  <text x="845" y="408" fill="rgba(255,255,255,0.5)" font-size="9">• Tech Trend Scout</text>
+  <text x="845" y="423" fill="rgba(255,255,255,0.5)" font-size="9">• Prompt Library Builder</text>
+
+  <text x="915" y="448" fill="rgba(255,255,255,0.4)" font-size="8">Current: Komputermechanic ref</text>
+  <text x="915" y="462" fill="rgba(255,255,255,0.4)" font-size="8">Status: Reference video analyzed</text>
+
+  <!-- FLOW CONNECTIONS -->
+  <!-- CEO → Hermes -->
+  <line x1="525" y1="80" x2="525" y2="110" stroke="rgba(255,140,0,0.4)" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Hermes → Teams (dashed delegation lines) -->
+  <line x1="475" y1="165" x2="145" y2="290" stroke="#FF0034" stroke-width="1" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="165" x2="405" y2="290" stroke="#00D4FF" stroke-width="1" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+  <line x1="525" y1="165" x2="665" y2="290" stroke="#FFD700" stroke-width="1" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+  <line x1="550" y1="165" x2="915" y2="290" stroke="#48FF82" stroke-width="1" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+
+  <!-- Teams → Hermes (reports back) -->
+  <line x1="145" y1="470" x2="400" y2="165" stroke="#FF0034" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow)" opacity="0.4"/>
+  <line x1="405" y1="470" x2="450" y2="165" stroke="#00D4FF" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow)" opacity="0.4"/>
+  <line x1="665" y1="470" x2="550" y2="165" stroke="#FFD700" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow)" opacity="0.4"/>
+  <line x1="915" y1="470" x2="575" y2="165" stroke="#48FF82" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrow)" opacity="0.4"/>
+
+  <!-- Hermes → CEO (approval) -->
+  <line x1="525" y1="165" x2="525" y2="80" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Bottom: Status bar -->
+  <rect x="50" y="500" width="950" height="30" rx="8" fill="rgba(72,255,130,0.08)" stroke="rgba(72,255,130,0.3)" stroke-width="1"/>
+  <text x="525" y="519" text-anchor="middle" fill="#48FF82" font-size="11" font-weight="600">● ALL SYSTEMS OPERATIONAL · Portfolio live at mokshith7777.github.io · 255 frames rendered</text>
+
+  <!-- Legend box bottom right -->
+  <rect x="50" y="550" width="950" height="90" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <text x="70" y="572" fill="rgba(255,255,255,0.5)" font-size="10" font-weight="700">KEY DECISION RULES (Hermes Manager Protocol):</text>
+  <text x="70" y="588" fill="rgba(255,255,255,0.35)" font-size="8.5">1. All team outputs require Hermes review before CEO presentation</text>
+  <text x="70" y="602" fill="rgba(255,255,255,0.35)" font-size="8.5">2. Video team must use Higgsfield MCP + Claude Code per Komputermechanic workflow</text>
+  <text x="70" y="616" fill="rgba(255,255,255,0.35)" font-size="8.5">3. Image team generates hero frames with Seedance 2.5 / Seedream 5.0 reference pipeline</text>
+  <text x="70" y="630" fill="rgba(255,255,255,0.35)" font-size="8.5">4. Coding team implements AI-generated HTML/CSS (not static JPG frame sequence)</text>
+  <text x="70" y="644" fill="rgba(255,255,255,0.35)" font-size="8.5">5. Research team continuously scans for new techniques · Max 5 reviewer rounds per task</text>
+</svg>
+</div>
+
+<div class="roles-table">
+  <div class="role-card">
+    <h3 style="color:#FF8C00;">🎯 CEO — Mokshith Reddy</h3>
+    <p>Sets vision, approves final output, defines brand direction. You are the decision-maker on aesthetics, content, and strategic direction.</p>
+    <div class="tags">
+      <span class="tag">Vision</span><span class="tag">Final Approver</span><span class="tag">Brand</span>
+    </div>
+  </div>
+  <div class="role-card">
+    <h3 style="color:#fff;">🤖 Manager — Hermes Agent</h3>
+    <p>Orchestrates teams, delegates tasks, verifies outputs, enforces the 5-round review cap. Reports status to CEO via Telegram.</p>
+    <div class="tags">
+      <span class="tag">Orchestrate</span><span class="tag">Delegate</span><span class="tag">Verify</span><span class="tag">Report</span>
+    </div>
+  </div>
+  <div class="role-card">
+    <h3 style="color:#FF0034;">💻 Coding Team</h3>
+    <p>Builds the portfolio website with Claude Code. Implements HTML/CSS from AI-generated reference images. Runs the reviewer gate.</p>
+    <div class="tags">
+      <span class="tag">Claude Code</span><span class="tag">HTML/CSS</span><span class="tag">React</span><span class="tag">FFmpeg</span>
+    </div>
+  </div>
+  <div class="role-card">
+    <h3 style="color:#00D4FF;">🎬 Video Team</h3>
+    <p>Builds scroll-driven animations using Seedance 2.5 via Higgsfield MCP. Converts HTML → animated frames → video.</p>
+    <div class="tags">
+      <span class="tag">Seedance 2.5</span><span class="tag">HyperFrames</span><span class="tag">Scroll Anim</span>
+    </div>
+  </div>
+  <div class="role-card">
+    <h3 style="color:#FFD700;">🎨 Image Team</h3>
+    <p>Generates reference images with Seedream 5.0 / Nano Banana Pro. Creates hero frames, background art, and design assets.</p>
+    <div class="tags">
+      <span class="tag">Seedream 5.0</span><span class="tag">Nano Banana Pro</span><span class="tag">Design</span>
+    </div>
+  </div>
+  <div class="role-card">
+    <h3 style="color:#48FF82;">🔬 Research Team</h3>
+    <p>Analyzes reference videos, tracks competitor portfolios, finds new techniques, maintains prompt libraries.</p>
+    <div class="tags">
+      <span class="tag">YouTube</span><span class="tag">Awwwards</span><span class="tag">Trends</span><span class="tag">Prompts</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
