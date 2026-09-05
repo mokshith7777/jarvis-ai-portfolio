@@ -1,432 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta name="description" content="JARVIS AI — Creator & Lead Developer Mokshith Reddy.">
-  <title>JARVIS AI — Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --neon-red: #FF0034;
-      --neon-blue: #00D4FF;
-      --neon-green: #48FF82;
-      --gold: #FFD700;
-      --white: #ffffff;
-      --text-muted: #555;
-      --bg-glass: rgba(5, 5, 10, 0.75);
-      --border-glass: rgba(255,255,255,0.06);
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family:'Inter',sans-serif; background:#000; color:#fff; overflow-x:hidden; }
-
-    /* ===== ARC REACTOR BACKGROUND ===== */
-    #arc-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .arc-svg {
-      width: min(90vw, 90vh);
-      height: min(90vw, 90vh);
-      opacity: 0.35;
-      animation: arc-breathe 4s ease-in-out infinite;
-    }
-
-    @keyframes arc-breathe {
-      0%, 100% { opacity: 0.30; transform: scale(1); }
-      50%       { opacity: 0.42; transform: scale(1.02); }
-    }
-
-    /* outer ring glow */
-    .arc-outer-tri { animation: tri-spin-slow 18s linear infinite; transform-origin: 50% 50%; }
-    .arc-inner-tri { animation: tri-spin-rev  10s linear infinite; transform-origin: 50% 50%; }
-    .arc-core-ring { animation: core-pulse 2.5s ease-in-out infinite; transform-origin: 50% 50%; }
-    .arc-electric-1 { animation: electric-flash 1.8s ease-in-out infinite; }
-    .arc-electric-2 { animation: electric-flash 2.3s ease-in-out infinite 0.4s; }
-    .arc-electric-3 { animation: electric-flash 1.5s ease-in-out infinite 0.9s; }
-
-    @keyframes tri-spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes tri-spin-rev  { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-    @keyframes core-pulse    {
-      0%,100% { r: 55; opacity: 1; }
-      50%     { r: 60; opacity: 0.8; }
-    }
-    @keyframes electric-flash {
-      0%,100% { opacity: 0.5; stroke-width: 1; }
-      50%     { opacity: 1;   stroke-width: 2; }
-    }
-
-    /* scrollable content */
-    .content { position:relative; z-index:1; }
-
-    section {
-      position: relative;
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 120px 6vw;
-    }
-    section.dark { background: rgba(5,5,10,0.92); }
-    .inner { max-width: 1160px; margin:0 auto; width:100%; }
-
-    .label { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.22em; opacity:.45; margin-bottom:14px; }
-    h1,h2 { font-size:clamp(2.4rem,6vw,4.6rem); font-weight:900; letter-spacing:-.03em; line-height:1.06; }
-    .red  { color:var(--neon-red);  text-shadow:0 0 24px rgba(255,0,52,.55); }
-    .blue { color:var(--neon-blue); text-shadow:0 0 24px rgba(0,212,255,.55); }
-    .sub  { font-size:clamp(.95rem,2vw,1.25rem); font-weight:300; opacity:.7; max-width:700px; line-height:1.65; margin-top:14px; }
-
-    /* glass card */
-    .card {
-      background: var(--bg-glass);
-      border: 1px solid var(--border-glass);
-      backdrop-filter: blur(14px);
-      border-radius:14px;
-      padding:28px;
-      transition: border-color .3s, transform .3s;
-    }
-    .card:hover { border-color:var(--neon-red); transform:translateY(-3px); }
-    .card h3 { font-size:1.15rem; font-weight:600; margin-bottom:10px; }
-    .card p  { font-size:.88rem; opacity:.65; line-height:1.6; }
-    .card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
-    .tag { padding:3px 11px; border-radius:20px; font-size:.72rem; font-weight:500;
-           background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); color:rgba(255,255,255,.6); }
-
-    /* two-col grid */
-    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:52px; margin-top:44px; }
-    .col   { display:flex; flex-direction:column; gap:20px; }
-
-    /* metrics */
-    .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-top:44px; }
-    .metric  { background:var(--bg-glass); border:1px solid var(--border-glass); backdrop-filter:blur(12px);
-               border-radius:12px; padding:26px 18px; text-align:center; }
-    .metric .val { font-size:2rem; font-weight:800; margin-bottom:4px; }
-    .metric .val.r { color:var(--neon-red); }
-    .metric .val.b { color:var(--neon-blue); }
-    .metric .val.g { color:var(--neon-green); }
-    .metric .lbl { font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; opacity:.55; }
-    .metric .dsc { font-size:.7rem; color:var(--text-muted); margin-top:4px; }
-
-    /* cta button */
-    .cta {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:14px 36px; border:1px solid var(--neon-red); border-radius:30px;
-      font-weight:600; font-size:.95rem; color:var(--neon-red);
-      text-decoration:none; transition:background .3s;
-      margin-top:36px;
-    }
-    .cta:hover { background:rgba(255,0,52,.1); }
-    .cta.blue-btn { border-color:var(--neon-blue); color:var(--neon-blue); }
-    .cta.blue-btn:hover { background:rgba(0,212,255,.08); }
-
-    /* contact */
-    .contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:30px; }
-    .ci { display:flex; align-items:center; gap:18px; padding:22px; background:var(--bg-glass);
-          border:1px solid var(--border-glass); border-radius:12px; }
-    .ci-icon { font-size:1.6rem; }
-    .ci-lbl { font-size:.68rem; text-transform:uppercase; letter-spacing:.18em; opacity:.4; }
-    .ci-val a { color:var(--neon-blue); text-decoration:none; font-weight:600; font-size:.9rem; }
-    .ci-val a:hover { text-decoration:underline; }
-
-    /* side nav dots */
-    .nav-dots { position:fixed; right:26px; top:50%; transform:translateY(-50%); z-index:99;
-                display:flex; flex-direction:column; gap:14px; }
-    .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.18); transition:all .3s; }
-    .dot.on { background:var(--neon-red); box-shadow:0 0 8px var(--neon-red); transform:scale(1.4); }
-
-    /* scroll hint */
-    .hint { position:fixed; bottom:26px; left:50%; transform:translateX(-50%); z-index:99; text-align:center; }
-    .hint span { font-size:.7rem; text-transform:uppercase; letter-spacing:.2em; opacity:.35; }
-    .hint-bar { width:36px; height:2px; background:rgba(255,255,255,.12); border-radius:2px; margin:6px auto 0; overflow:hidden; }
-    .hint-fill { height:100%; background:var(--neon-red); width:0%; transition:width .08s; }
-    .hint.gone { opacity:0; pointer-events:none; }
-
-    @media(max-width:768px){
-      section { padding:90px 18px; }
-      .grid2 { grid-template-columns:1fr; gap:30px; }
-      .nav-dots { display:none; }
-      h1,h2 { font-size:clamp(2rem,8vw,3rem); }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#03050b">
+<meta name="description" content="JARVIS AI — personal AI command system created by Mokshith Reddy.">
+<title>JARVIS AI — Mokshith Reddy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#020308;--panel:rgba(4,8,18,.58);--line:rgba(255,255,255,.11);--white:#f7fbff;--muted:rgba(235,243,255,.62);--red:#ff174f;--red2:#ff4f76;--blue:#08bfff;--cyan:#58e7ff;--gold:#ffc857;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;background:var(--bg)}body{font-family:Inter,system-ui,sans-serif;color:var(--white);background:var(--bg);overflow-x:hidden}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0}
+#scene{position:fixed;inset:0;z-index:0;overflow:hidden;background:#010208;pointer-events:none}.scene-image{position:absolute;inset:-7%;width:114%;height:114%;object-fit:cover;filter:saturate(1.15) contrast(1.08) brightness(.45);transform:scale(1.04);transition:transform 1.4s var(--ease);opacity:.5;object-position:center}.scene-vignette{position:absolute;inset:0;background:radial-gradient(circle at 72% 48%,transparent 0 18%,rgba(1,2,8,.18) 40%,rgba(1,2,8,.93) 100%),linear-gradient(90deg,rgba(1,2,8,.92) 0%,rgba(1,2,8,.35) 46%,rgba(1,2,8,.7) 100%)}.scene-grid{position:absolute;inset:-20%;background-image:linear-gradient(rgba(8,191,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(8,191,255,.045) 1px,transparent 1px);background-size:70px 70px;transform:perspective(600px) rotateX(63deg) translateY(20%);transform-origin:center bottom;opacity:.42}.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(255,255,255,.015) 6px 7px);mix-blend-mode:screen;opacity:.5}.noise{position:absolute;inset:-50%;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");animation:noise 1s steps(2) infinite}@keyframes noise{0%{transform:translate(0,0)}25%{transform:translate(3%,-2%)}50%{transform:translate(-2%,3%)}75%{transform:translate(2%,2%)}100%{transform:translate(-3%,-1%)}}
+#particles{position:fixed;inset:0;z-index:1;pointer-events:none}.content{position:relative;z-index:2}.hud{position:fixed;z-index:20;left:22px;right:22px;top:18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}.brand{font:700 12px 'Space Mono',monospace;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.8)}.brand b{color:var(--red)}.status{display:flex;align-items:center;gap:8px;font:700 10px 'Space Mono',monospace;letter-spacing:.12em;color:rgba(255,255,255,.5)}.status i{width:6px;height:6px;border-radius:50%;background:#4dff8b;box-shadow:0 0 12px #4dff8b;animation:pulse 1.5s infinite}@keyframes pulse{50%{opacity:.35;transform:scale(.6)}}
+.progress{position:fixed;z-index:30;left:0;top:0;width:100%;height:2px;background:rgba(255,255,255,.04)}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--blue));box-shadow:0 0 18px var(--red)}
+section{min-height:100vh;position:relative;padding:120px clamp(22px,6vw,110px);display:flex;align-items:center}.wrap{width:min(1250px,100%);margin:auto}.eyebrow{font:700 10px 'Space Mono',monospace;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}.eyebrow span{color:var(--red)}h1{font-size:clamp(4rem,11vw,10rem);line-height:.78;letter-spacing:-.075em;font-weight:900;max-width:980px}h1 .outline{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.52)}h1 .red{color:var(--red);text-shadow:0 0 60px rgba(255,23,79,.35)}.lead{max-width:720px;margin-top:32px;color:var(--muted);font-size:clamp(1rem,1.7vw,1.25rem);line-height:1.8}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.btn{padding:14px 20px;border:1px solid rgba(255,255,255,.16);background:rgba(2,4,10,.55);backdrop-filter:blur(18px);border-radius:999px;font:700 11px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;transition:.35s var(--ease)}.btn.primary{border-color:rgba(255,23,79,.7);box-shadow:0 0 30px rgba(255,23,79,.12)}.btn:hover{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 0 35px rgba(8,191,255,.13)}
+.hero{overflow:hidden}.hero-core{position:absolute;right:-3%;top:50%;width:min(52vw,690px);aspect-ratio:1;transform:translateY(-50%);border-radius:50%;opacity:.78;filter:drop-shadow(0 0 40px rgba(8,191,255,.2));animation:float 7s ease-in-out infinite}.hero-core img{width:100%;height:100%;object-fit:cover;border-radius:50%;mask-image:radial-gradient(circle,#000 0 47%,transparent 70%);-webkit-mask-image:radial-gradient(circle,#000 0 47%,transparent 70%)}.ring{position:absolute;inset:8%;border:1px solid rgba(8,191,255,.32);border-radius:50%;box-shadow:0 0 80px rgba(8,191,255,.08),inset 0 0 60px rgba(255,23,79,.06);animation:spin 24s linear infinite}.ring.r2{inset:19%;border-color:rgba(255,23,79,.32);animation-duration:15s;animation-direction:reverse}.ring:after{content:"";position:absolute;left:50%;top:-5px;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 20px var(--cyan)}@keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:translateY(calc(-50% - 14px)) scale(1.02)}}
+.corner{position:absolute;width:110px;height:110px;border:1px solid rgba(255,255,255,.13);opacity:.6}.corner.tl{left:6vw;top:24vh;border-right:0;border-bottom:0}.corner.br{right:6vw;bottom:12vh;border-left:0;border-top:0}.scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font:700 9px 'Space Mono',monospace;letter-spacing:.22em;color:rgba(255,255,255,.35);text-transform:uppercase}.scroll:after{content:"";display:block;width:1px;height:52px;background:linear-gradient(var(--red),transparent);margin:10px auto 0}
+.section-head{display:grid;grid-template-columns:minmax(200px,.55fr) 1.45fr;gap:60px;align-items:end;margin-bottom:58px}.section-no{font:700 12px 'Space Mono',monospace;color:var(--red);letter-spacing:.2em}.section-title{font-size:clamp(2.5rem,6vw,6rem);letter-spacing:-.06em;line-height:.9}.section-copy{max-width:670px;color:var(--muted);line-height:1.8;margin-top:20px}
+.glass{background:linear-gradient(145deg,rgba(10,16,30,.7),rgba(2,5,12,.46));border:1px solid var(--line);backdrop-filter:blur(20px);box-shadow:0 30px 90px rgba(0,0,0,.28);border-radius:20px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.card{padding:30px;min-height:260px;position:relative;overflow:hidden;transition:transform .5s var(--ease),border-color .4s}.card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%,rgba(8,191,255,.11),transparent 32%),radial-gradient(circle at 10% 90%,rgba(255,23,79,.08),transparent 30%);opacity:.8}.card:hover{transform:translateY(-7px) rotateX(2deg);border-color:rgba(8,191,255,.34)}.card>*{position:relative}.num{font:700 10px 'Space Mono',monospace;color:var(--red);letter-spacing:.15em}.card h3{font-size:1.35rem;margin:28px 0 12px;letter-spacing:-.03em}.card p{color:var(--muted);line-height:1.7;font-size:.93rem}.tagline{margin-top:25px;font:700 9px 'Space Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.36)}
+.flow{position:relative;padding:40px;overflow:hidden}.flow-line{position:absolute;left:10%;right:10%;top:50%;height:1px;background:linear-gradient(90deg,transparent,var(--red),var(--blue),transparent);box-shadow:0 0 24px rgba(8,191,255,.25)}.nodes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;position:relative}.node{min-height:150px;padding:22px;border:1px solid rgba(255,255,255,.11);background:rgba(2,5,12,.72);border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;transform:translateY(var(--y,0));transition:.6s var(--ease)}.node:nth-child(2){--y:-22px}.node:nth-child(4){--y:-22px}.node strong{font-size:1rem}.node small{font:700 9px 'Space Mono',monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}.node b{color:var(--cyan);font:700 11px 'Space Mono',monospace}
+.archive{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}.project{min-height:430px;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;position:relative}.project img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.38;transition:transform 1.1s var(--ease),opacity .7s}.project:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(2,4,9,.92) 88%)}.project:hover img{transform:scale(1.06);opacity:.52}.project>*{position:relative;z-index:1}.project h3{font-size:clamp(1.8rem,3.3vw,3.4rem);letter-spacing:-.05em;margin:10px 0}.project p{color:var(--muted);line-height:1.7;max-width:650px}.project .meta,.mini .meta{font:700 9px 'Space Mono',monospace;letter-spacing:.15em;color:var(--red);text-transform:uppercase}.side-stack{display:grid;gap:20px}.mini{padding:28px;min-height:205px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;position:relative}.mini img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;transition:.8s}.mini:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(2,4,9,.92))}.mini>*{position:relative;z-index:1}.mini:hover img{transform:scale(1.08);opacity:.3}.mini h3{font-size:1.4rem;margin:8px 0}.mini p{font-size:.82rem;color:var(--muted);line-height:1.6}
+.creator{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px}.portrait{min-height:620px;position:relative;overflow:hidden}.portrait img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:contrast(1.06) saturate(.92);transition:transform 1.2s var(--ease)}.portrait:hover img{transform:scale(1.035)}.portrait:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(2,4,9,.88)),linear-gradient(90deg,rgba(255,23,79,.08),transparent 50%,rgba(8,191,255,.08))}.bio{padding:42px;display:flex;flex-direction:column;justify-content:center}.bio h3{font-size:clamp(2rem,4vw,4.4rem);letter-spacing:-.055em;line-height:.95;margin:12px 0 24px}.bio p{color:var(--muted);line-height:1.85}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}.chip{padding:8px 11px;border:1px solid rgba(255,255,255,.1);border-radius:999px;font:700 9px 'Space Mono',monospace;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em}
+.future{min-height:80vh}.directive{font-size:clamp(3.3rem,8vw,9rem);font-weight:900;letter-spacing:-.075em;line-height:.86}.directive span{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.38)}.sequence{display:flex;gap:10px;flex-wrap:wrap;margin-top:35px}.sequence span{font:700 11px 'Space Mono',monospace;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:999px;color:rgba(255,255,255,.62)}.sequence i{color:var(--red);font-style:normal}
+footer{padding:80px 6vw 45px;border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:2}.footer-inner{width:min(1250px,100%);margin:auto;display:flex;justify-content:space-between;gap:30px;align-items:flex-end}.footer-title{font-size:clamp(2.5rem,6vw,6rem);letter-spacing:-.065em;line-height:.85}.footer-meta{font:700 9px 'Space Mono',monospace;letter-spacing:.14em;color:rgba(255,255,255,.35);line-height:2;text-align:right}
+.reveal{opacity:0;transform:translateY(42px) scale(.98);transition:opacity .9s var(--ease),transform .9s var(--ease)}.reveal.visible{opacity:1;transform:none}.depth{will-change:transform}
+@media(max-width:900px){.hero-core{width:100vw;right:-34%;opacity:.42}.section-head,.archive,.creator{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.nodes{grid-template-columns:1fr}.flow-line{display:none}.node:nth-child(2),.node:nth-child(4){--y:0}.portrait{min-height:520px}.footer-inner{flex-direction:column;align-items:flex-start}.footer-meta{text-align:left}.status{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
 </head>
 <body>
-
-<!-- ===== ARC REACTOR BACKGROUND (background only, never in portal content) ===== -->
-<div id="arc-bg">
-  <svg class="arc-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <!-- Primary: neon red → white glow -->
-      <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stop-color="#FF0034"/>
-        <stop offset="55%"  stop-color="#FF4466"/>
-        <stop offset="100%" stop-color="#FFFFFF"/>
-      </linearGradient>
-      <!-- Secondary: neon blue → green -->
-      <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stop-color="#00D4FF"/>
-        <stop offset="100%" stop-color="#48FF82"/>
-      </linearGradient>
-      <!-- Glow filters -->
-      <filter id="redGlow" x="-40%" y="-40%" width="180%" height="180%">
-        <feGaussianBlur stdDeviation="8" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="blueGlow" x="-40%" y="-40%" width="180%" height="180%">
-        <feGaussianBlur stdDeviation="6" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="coreGlow" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="12" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-
-    <!-- Outer triangle: neon red gradient, slowly rotating -->
-    <g class="arc-outer-tri" filter="url(#redGlow)">
-      <polygon points="300,30 560,500 40,500"
-               fill="none" stroke="url(#redGrad)" stroke-width="3" opacity="0.9"/>
-      <!-- white glow vertex dots -->
-      <circle cx="300" cy="30"  r="8" fill="#FFFFFF" opacity="0.9"/>
-      <circle cx="560" cy="500" r="8" fill="#FFFFFF" opacity="0.9"/>
-      <circle cx="40"  cy="500" r="8" fill="#FFFFFF" opacity="0.9"/>
-      <!-- edge tick marks -->
-      <line x1="300" y1="30"  x2="300" y2="80"  stroke="#FF0034" stroke-width="2" opacity="0.7"/>
-      <line x1="560" y1="500" x2="520" y2="465" stroke="#FF0034" stroke-width="2" opacity="0.7"/>
-      <line x1="40"  y1="500" x2="80"  y2="465" stroke="#FF0034" stroke-width="2" opacity="0.7"/>
-    </g>
-
-    <!-- Middle triangle: neon blue/green, counter-rotating -->
-    <g class="arc-inner-tri" filter="url(#blueGlow)">
-      <polygon points="300,110 490,440 110,440"
-               fill="none" stroke="url(#blueGrad)" stroke-width="2" opacity="0.85"/>
-      <circle cx="300" cy="110" r="5" fill="#00D4FF" opacity="0.9"/>
-      <circle cx="490" cy="440" r="5" fill="#48FF82" opacity="0.9"/>
-      <circle cx="110" cy="440" r="5" fill="#00D4FF" opacity="0.9"/>
-    </g>
-
-    <!-- Electric signal arcs: neon blue/green -->
-    <g filter="url(#blueGlow)">
-      <!-- top vertex down -->
-      <line x1="300" y1="30"  x2="300" y2="110" class="arc-electric-1"
-            stroke="#48FF82" stroke-width="1.5" opacity="0.8"/>
-      <!-- bottom-right vertex -->
-      <line x1="560" y1="500" x2="490" y2="440" class="arc-electric-2"
-            stroke="#00D4FF" stroke-width="1.5" opacity="0.8"/>
-      <!-- bottom-left vertex -->
-      <line x1="40"  y1="500" x2="110" y2="440" class="arc-electric-3"
-            stroke="#48FF82" stroke-width="1.5" opacity="0.8"/>
-      <!-- inner cross signals -->
-      <line x1="300" y1="110" x2="490" y2="440" class="arc-electric-1"
-            stroke="#00D4FF" stroke-width="0.8" opacity="0.3"/>
-      <line x1="300" y1="110" x2="110" y2="440" class="arc-electric-2"
-            stroke="#48FF82" stroke-width="0.8" opacity="0.3"/>
-      <line x1="490" y1="440" x2="110" y2="440" class="arc-electric-3"
-            stroke="#00D4FF" stroke-width="0.8" opacity="0.3"/>
-    </g>
-
-    <!-- Core: pulsing white/red circle -->
-    <g filter="url(#coreGlow)">
-      <circle cx="300" cy="310" r="70" fill="#050010" stroke="#FF0034" stroke-width="2.5" class="arc-core-ring"/>
-      <circle cx="300" cy="310" r="52" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-      <circle cx="300" cy="310" r="36" fill="none" stroke="rgba(0,212,255,0.25)" stroke-width="1" class="arc-electric-2"/>
-      <!-- center hub -->
-      <circle cx="300" cy="310" r="10" fill="#FF0034" opacity="0.9"/>
-      <circle cx="300" cy="310" r="5"  fill="#FFFFFF"/>
-    </g>
-
-    <!-- Outer decorative rings -->
-    <circle cx="300" cy="310" r="120" fill="none" stroke="rgba(255,0,52,0.12)" stroke-width="1" stroke-dasharray="6 8"/>
-    <circle cx="300" cy="310" r="160" fill="none" stroke="rgba(0,212,255,0.10)" stroke-width="1" stroke-dasharray="4 10"/>
-  </svg>
-</div>
-
-<!-- ===== MAIN PORTAL CONTENT ===== -->
-<div class="content">
-
-  <!-- HERO -->
-  <section>
-    <div class="inner">
-      <div class="label">01 / ORIGIN PROTOCOL</div>
-      <h1><span class="red">BUILT TO</span><br>ACT.</h1>
-      <p class="sub">
-        Most assistants stop at the answer.<br>
-        <strong style="color:#fff;opacity:.95;">JARVIS starts there.</strong>
-      </p>
-      <a href="https://jarvis-ai-3ba39.web.app" class="cta" target="_blank" rel="noopener">
-        LAUNCH JARVIS ↗
-      </a>
-    </div>
-  </section>
-
-  <!-- WHY JARVIS -->
-  <section class="dark">
-    <div class="inner">
-      <div class="label">02 / CAPABILITY MATRIX</div>
-      <h2>WHY <span class="blue">JARVIS</span> EXISTS</h2>
-      <p class="sub">
-        JARVIS is a personal command layer — it understands intent, coordinates models,
-        selects tools and turns a request into an executed workflow. Not just a chatbot.
-        An ecosystem.
-      </p>
-      <div class="grid2">
-        <div class="col">
-          <div class="card">
-            <h3 style="color:var(--neon-red)">CREATIVE</h3>
-            <p>AI content engine — visuals, writing, structured output generation</p>
-            <div class="card-tags"><span class="tag">Claude Code</span><span class="tag">Higgsfield MCP</span><span class="tag">Seedance 2.5</span></div>
-          </div>
-          <div class="card">
-            <h3 style="color:var(--neon-blue)">AUTOMATION</h3>
-            <p>Workflows that chain reasoning, routing and tool execution across 12+ providers</p>
-            <div class="card-tags"><span class="tag">Edge Inference</span><span class="tag">Cloudflare</span><span class="tag">OpenRouter</span></div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="metrics" style="margin-top:0">
-            <div class="metric"><div class="val r">12+</div><div class="lbl">Model Routing</div><div class="dsc">OpenAI, Anthropic, Google…</div></div>
-            <div class="metric"><div class="val b">~800ms</div><div class="lbl">Response Time</div><div class="dsc">Edge-optimized</div></div>
-            <div class="metric"><div class="val g">EDGE</div><div class="lbl">Infrastructure</div><div class="dsc">Cloudflare Workers</div></div>
-            <div class="metric"><div class="val r">FREE</div><div class="lbl">Cost</div><div class="dsc">Free-tier-first</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- JARVIS AI PRODUCT -->
-  <section>
-    <div class="inner">
-      <div class="label">03 / THE PRODUCT</div>
-      <h2>THE <span class="red">JARVIS</span><br>AI CHATBOT</h2>
-      <p class="sub">
-        Flagship AI command interface — voice and text, tool routing, agent workflows,
-        cinematic HUD feedback. Multi-model. Persistent memory. 100+ skills.
-        Telegram / Discord / Slack gateways.
-      </p>
-      <div class="grid2" style="margin-top:36px">
-        <div class="col">
-          <div class="card">
-            <h3 style="color:var(--neon-red)">EDGE INFERENCE KIT</h3>
-            <p>Local-first inference pipeline. Zero-cloud, zero-latency AI on aarch64 / Android.</p>
-            <div class="card-tags"><span class="tag">Soon</span><span class="tag">ONNX</span><span class="tag">Python</span></div>
-          </div>
-          <div class="card">
-            <h3 style="color:var(--neon-blue)">AMBIENT UI</h3>
-            <p>Invisible interface. The AI adapts to your context without demanding screen attention.</p>
-            <div class="card-tags"><span class="tag">Soon</span><span class="tag">React</span><span class="tag">Context API</span></div>
-          </div>
-        </div>
-        <div class="col" style="justify-content:center">
-          <a href="https://jarvis-ai-3ba39.web.app" class="cta" target="_blank" rel="noopener" style="align-self:flex-start">
-            OPEN JARVIS AI ↗
-          </a>
-          <p style="opacity:.5;font-size:.85rem;margin-top:16px">jarvis-ai-3ba39.web.app</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CREATOR -->
-  <section class="dark" style="text-align:center">
-    <div class="inner" style="text-align:center">
-      <div class="label" style="text-align:center">04 / CREATOR NODE</div>
-      <h1>MOKSHITH<br><span class="red">REDDY</span></h1>
-      <p class="sub" style="margin:16px auto 0;max-width:560px">
-        Creator & Lead Developer — JARVIS AI.<br>
-        Student and technology-driven builder: AI assistants, web apps,
-        games and futuristic interfaces.
-      </p>
-      <div class="metrics" style="margin-top:44px;text-align:center">
-        <div class="metric"><div class="val r">100+</div><div class="lbl">Skills</div></div>
-        <div class="metric"><div class="val b">12+</div><div class="lbl">Models Routed</div></div>
-        <div class="metric"><div class="val g">EDGE</div><div class="lbl">Infrastructure</div></div>
-        <div class="metric"><div class="val r" style="font-size:1.5rem">∞</div><div class="lbl">Iterations</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section>
-    <div class="inner">
-      <div class="label">TRANSMISSION — READY</div>
-      <h2><span class="red">OPEN A</span><br>CHANNEL.</h2>
-      <p class="sub">AI experiments, web builds, collaborations and ambitious ideas.</p>
-      <div class="contact-grid">
-        <div class="ci">
-          <div class="ci-icon">📧</div>
-          <div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:mokshithreddysingana@gmail.com">mokshithreddysingana@gmail.com</a></div></div>
-        </div>
-        <div class="ci">
-          <div class="ci-icon">💻</div>
-          <div><div class="ci-lbl">GitHub</div><div class="ci-val"><a href="https://github.com/mokshith7777">github.com/mokshith7777</a></div></div>
-        </div>
-        <div class="ci">
-          <div class="ci-icon">🚀</div>
-          <div><div class="ci-lbl">Product</div><div class="ci-val"><a href="https://jarvis-ai-3ba39.web.app">jarvis-ai-3ba39.web.app</a></div></div>
-        </div>
-      </div>
-      <div style="margin-top:44px;text-align:center">
-        <a href="mailto:mokshithreddysingana@gmail.com" class="cta blue-btn">TRANSMIT MESSAGE ↗</a>
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<!-- Side nav dots -->
-<div class="nav-dots" id="navDots">
-  <div class="dot on"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-</div>
-
-<!-- Scroll hint -->
-<div class="hint" id="hint">
-  <span>SCROLL TO EXPLORE</span>
-  <div class="hint-bar"><div class="hint-fill" id="hintFill"></div></div>
-</div>
-
+<div id="scene" aria-hidden="true"><img class="scene-image" src="frames/frame_0000.jpg" alt=""><div class="scene-grid"></div><div class="scene-vignette"></div><div class="scan"></div><div class="noise"></div></div>
+<canvas id="particles"></canvas><div class="progress"><i id="progressBar"></i></div>
+<header class="hud"><div class="brand"><b>JARVIS</b> / MOKSHITH REDDY</div><div class="status"><i></i>SYSTEM ACTIVE · 2026</div></header>
+<main class="content">
+<section class="hero" id="home"><div class="corner tl"></div><div class="corner br"></div><div class="wrap"><div class="eyebrow reveal"><span>00</span> / PERSONAL AI COMMAND SYSTEM</div><h1 class="reveal">JARVIS<br><span class="outline">AI</span><br><span class="red">SYSTEM.</span></h1><p class="lead reveal">An evolving personal command system built to move beyond the ordinary chatbot: understand intent, organize complexity, coordinate workflows, create digital systems and turn ambitious ideas into real results.</p><div class="actions reveal"><a class="btn primary" href="https://jarvis-ai-3ba39.web.app" target="_blank" rel="noreferrer">ENTER JARVIS ↗</a><a class="btn" href="#capabilities">EXPLORE SYSTEM ↓</a></div></div><div class="hero-core depth"><img src="frames/arc_reactor/watch_0000.jpg" alt="JARVIS core visual"><div class="ring"></div><div class="ring r2"></div></div><div class="scroll">scroll to activate</div></section>
+<section id="origin"><div class="wrap"><div class="section-head reveal"><div class="section-no">01 / ORIGIN PROTOCOL</div><div><h2 class="section-title">BUILT TO<br><span class="red">ACT.</span></h2><p class="section-copy">JARVIS began as an experiment to move beyond the ordinary chatbot. The goal is a personal command layer that can understand an objective, coordinate the work around it and turn a request into an executable workflow.</p></div></div><div class="flow glass reveal"><div class="flow-line"></div><div class="nodes"><div class="node"><small>01 / INPUT</small><strong>Intent</strong><b>Understand</b></div><div class="node"><small>02 / CORE</small><strong>Reasoning</strong><b>Organize</b></div><div class="node"><small>03 / CONTROL</small><strong>Routing</strong><b>Coordinate</b></div><div class="node"><small>04 / ACTION</small><strong>Workflow</strong><b>Execute</b></div><div class="node"><small>05 / OUTPUT</small><strong>Result</strong><b>Improve</b></div></div></div></div></section>
+<section id="capabilities"><div class="wrap"><div class="section-head reveal"><div class="section-no">02 / CAPABILITY MATRIX</div><div><h2 class="section-title">ONE CORE.<br><span class="outline">MANY MODES.</span></h2><p class="section-copy">JARVIS is designed as an ecosystem rather than a single conversation window. The same objective can move between reasoning, research, creation, automation and development without losing the thread.</p></div></div><div class="grid"><article class="card glass reveal"><span class="num">01 / INTELLIGENCE</span><h3>Reasoning &amp; Routing</h3><p>Understand the objective, break complex requests into useful steps and direct each step toward the workflow that makes the most sense.</p><div class="tagline">CORE MODE · OBJECTIVE FIRST</div></article><article class="card glass reveal"><span class="num">02 / CREATION</span><h3>Content Engine</h3><p>Turn ideas into interfaces, visuals, written concepts and structured creative outputs while keeping the original intent at the center.</p><div class="tagline">CREATIVE MODE · IDEA → OUTPUT</div></article><article class="card glass reveal"><span class="num">03 / AUTOMATION</span><h3>Workflow Control</h3><p>Connect individual tasks into repeatable flows so a larger objective can be coordinated instead of rebuilt from scratch every time.</p><div class="tagline">AGENT MODE · FLOW CONTROL</div></article><article class="card glass reveal"><span class="num">04 / DEVELOPMENT</span><h3>Build Systems</h3><p>Prototype websites, applications, games and developer tools with a practical bias toward working results, iteration and shipping.</p><div class="tagline">BUILDER MODE · BUILD → TEST → SHIP</div></article></div></div></section>
+<section id="archive"><div class="wrap"><div class="section-head reveal"><div class="section-no">03 / SYSTEM ARCHIVE</div><div><h2 class="section-title">THE JARVIS<br><span class="red">STACK.</span></h2><p class="section-copy">A growing portfolio of AI experiments, applications, games and developer systems. Each node represents a different direction of the same builder mindset.</p></div></div><div class="archive"><article class="project glass reveal"><img src="frames/frame_0000.jpg" alt="JARVIS city interface"><div class="meta">01 / CORE SYSTEM</div><h3>JARVIS AI</h3><p>The flagship personal AI command interface, designed around voice and text interaction, intelligent task routing, agent workflows and cinematic system feedback.</p></article><div class="side-stack"><article class="mini glass reveal"><img src="frames/frame_0010.jpg" alt="Cinematic character reference"><div class="meta">02 / GAME</div><h3>SALAAR STREETS</h3><p>A 2D action-fighter experiment focused on cinematic combat and responsive controls.</p></article><article class="mini glass reveal"><img src="frames/frame_0000.jpg" alt="Futuristic city reference"><div class="meta">03 / GAME</div><h3>SUBWAY ZOOMER</h3><p>An endless runner web-game concept built around mobile interaction.</p></article><article class="mini glass reveal"><img src="frames/arc_reactor/watch_0000.jpg" alt="JARVIS core reference"><div class="meta">04 / AI INFRA</div><h3>EDGE INFERENCE KIT</h3><p>An architecture direction for efficient AI execution and intelligent routing.</p></article></div></div></div></section>
+<section id="creator"><div class="wrap"><div class="section-head reveal"><div class="section-no">04 / ORIGIN NODE</div><div><h2 class="section-title">THE<br><span class="outline">CREATOR.</span></h2><p class="section-copy">Behind the system is a student builder using JARVIS as a long-term experiment in turning ambitious ideas into real digital systems.</p></div></div><div class="creator"><div class="portrait glass reveal"><img src="frames/frame_0010.jpg" alt="Cinematic reference portrait"></div><div class="bio glass reveal"><div class="eyebrow"><span>CREATOR NODE</span> / PROFILE ACTIVE</div><h3>MOKSHITH<br>REDDY</h3><p>Student · Creator · Builder · AI Developer</p><p style="margin-top:18px">I’m Mokshith Reddy, a technology-driven builder focused on AI assistants, web applications, games and futuristic interfaces. I created JARVIS as a long-term experiment in building a personal command system that can organize complexity and turn ambitious ideas into real digital systems.</p><div class="chips"><span class="chip">AI / Chatbots</span><span class="chip">Web Development</span><span class="chip">Game Development</span><span class="chip">3D Experiences</span><span class="chip">JavaScript</span><span class="chip">React / Tailwind</span></div><div class="actions"><a class="btn primary" href="https://github.com/mokshith7777" target="_blank" rel="noreferrer">OPEN GITHUB ↗</a></div></div></div></div></section>
+<section class="future" id="future"><div class="wrap"><div class="section-no reveal">05 / FUTURE DIRECTIVE</div><div class="directive reveal" style="margin-top:32px">THE FUTURE<br><span>IS ACTIVE.</span></div><p class="lead reveal">A personal AI should not only know things. It should help make things happen. The long-term direction is a unified environment where conversation becomes execution, research becomes a plan, a plan becomes a workflow, and a workflow becomes a finished product.</p><div class="sequence reveal"><span>IDEA <i>→</i></span><span>REASON <i>→</i></span><span>BUILD <i>→</i></span><span>TEST <i>→</i></span><span>SHIP</span></div></div></section>
+</main><footer><div class="footer-inner"><div><div class="eyebrow"><span>06</span> / COMMUNICATION CHANNEL</div><div class="footer-title">OPEN A<br><span style="color:var(--red)">CHANNEL.</span></div></div><div class="footer-meta">mokshithreddysingana@gmail.com<br><a href="https://github.com/mokshith7777">GITHUB / MOKSHITH7777 ↗</a><br><br>JARVIS AI · CREATED BY MOKSHITH REDDY<br>© 2026 / SYSTEM ACTIVE</div></div></footer>
 <script>
-  const dots   = document.querySelectorAll('.dot');
-  const hint   = document.getElementById('hint');
-  const fill   = document.getElementById('hintFill');
-  const VH     = () => window.innerHeight;
-  const total  = () => document.body.scrollHeight - VH();
-
-  function onScroll() {
-    const y   = window.scrollY;
-    const t   = total();
-    const pct = t > 0 ? y / t : 0;
-
-    // scroll bar
-    fill.style.width = Math.min(100, pct * 100) + '%';
-
-    // hide hint after half section
-    if (y > VH() * 0.45) hint.classList.add('gone');
-    else hint.classList.remove('gone');
-
-    // active dot
-    const sec = Math.min(dots.length - 1, Math.floor(y / VH()));
-    dots.forEach((d, i) => d.classList.toggle('on', i === sec));
-  }
-
-  let tick = false;
-  window.addEventListener('scroll', () => {
-    if (!tick) { requestAnimationFrame(() => { onScroll(); tick = false; }); tick = true; }
-  });
-
-  window.addEventListener('load', onScroll);
-</script>
-</body>
-</html>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];const bar=$('#progressBar'),sceneImage=$('.scene-image'),core=$('.hero-core');let target=0;const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;target=max?scrollY/max:0;bar.style.width=(target*100)+'%';sceneImage.style.transform=`translate3d(${target*-18}px,${target*-26}px,0) scale(${1.04+target*.035})`;core.style.transform=`translate3d(${target*-35}px,calc(-50% + ${target*65}px),0) rotate(${target*8}deg)`};addEventListener('scroll',update,{passive:true});update();const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.12});$$('.reveal').forEach(x=>io.observe(x));const canvas=$('#particles'),ctx=canvas.getContext('2d');let dots=[];function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);dots=Array.from({length:Math.min(130,Math.floor(innerWidth/10))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.5+.2,v:Math.random()*.35+.08,a:Math.random()*.6+.15}))}function particles(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const d of dots){d.y-=d.v;if(d.y<0)d.y=innerHeight;ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fillStyle=`rgba(130,215,255,${d.a})`;ctx.fill()}requestAnimationFrame(particles)}addEventListener('resize',resize);resize();particles();$$('.card,.project,.mini,.bio,.flow').forEach(el=>el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateX(${y*-2.5}deg) rotateY(${x*3}deg) translateY(-4px)`}));$$('.card,.project,.mini,.bio,.flow').forEach(el=>el.addEventListener('pointerleave',()=>el.style.transform=''));
+</script></body></html>
