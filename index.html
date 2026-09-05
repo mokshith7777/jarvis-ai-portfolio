@@ -342,6 +342,427 @@
     SCROLL TO EXPLORE
   </div>
 
+  <!-- Scroll-driven page content -->
+  <div id="content" style="
+    position: relative;
+    width: 100%;
+    min-height: 300vh;
+    background: #0a0a1a;
+    color: var(--white);
+    padding-top: 100vh;
+    pointer-events: auto;
+  ">
+
+    <!-- Hero Section -->
+    <section style="
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    ">
+      <h1 style="
+        font-family: 'Orbitron', monospace;
+        font-size: 3.5rem;
+        color: var(--neon-red);
+        text-align: center;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(255, 18, 56, 0.5);
+      ">
+        Mokshith Reddy
+      </h1>
+      <p class="subtitle" style="
+        font-size: 1.5rem;
+        color: var(--neon-blue);
+        text-align: center;
+        margin-bottom: 30px;
+      ">
+        Creator &amp; Lead Developer — JARVIS AI
+      </p>
+      <p style="
+        text-align: center;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto 40px;
+        line-height: 1.7;
+      ">
+        Building AI that feels less like software and more like a collaborator.
+        JARVIS AI coordinates tools, agents, and workflows across 12+ LLM providers — not a chatbot, but a collaborator.
+      </p>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <section style="
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      background: rgba(26, 26, 46, 0.8);
+      border-radius: 12px;
+      margin-bottom: 60px;
+      box-shadow: 0 0 40px rgba(255, 18, 56, 0.1);
+    ">
+      <h2 style="
+        font-family: 'Orbitron', monospace;
+        font-size: 2rem;
+        color: var(--neon-red);
+        text-align: center;
+        margin-bottom: 30px;
+      ">
+        JARVIS AI — Cinematic Portfolio Showreel
+      </h2>
+      <div style="
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 8px;
+      ">
+        <video
+          src="jarvis-ai-portfolio.mp4"
+          poster="preview-thumb.jpg"
+          controls
+          style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+          "
+        >
+          <source src="jarvis-ai-portfolio.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p style="
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.9rem;
+        margin-top: 20px;
+      ">
+        30-second cinematic showreel: ARC Reactor 3D background, Spider-Man & Prabhas reference galleries,
+        JARVIS system architecture, rendered offline via Python/PIL + FFmpeg on Termux/aarch64.
+      </p>
+    </section>
+
+    <!-- JARVIS System Specs -->
+    <section style="
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    ">
+      <h2 style="
+        font-family: 'Orbitron', monospace;
+        font-size: 2rem;
+        color: var(--neon-blue);
+        text-align: center;
+        margin-bottom: 40px;
+      ">
+        JARVIS AI — System Architecture
+      </h2>
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      ">
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(255, 18, 56, 0.3);
+          border-radius: 8px;
+          padding: 24px;
+          text-align: center;
+          transition: transform 0.3s;
+        ">
+          <div style="color: var(--neon-red); font-size: 2rem; margin-bottom: 10px;">12+</div>
+          <div style="color: rgba(255, 255, 255, 0.7);">MODEL ROUTING</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 5px;">
+            OpenRouter, Anthropic, OpenAI, Google, DeepSeek, xAI, local
+          </div>
+        </div>
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(39, 223, 255, 0.3);
+          border-radius: 8px;
+          padding: 24px;
+          text-align: center;
+        ">
+          <div style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 10px;">~800ms</div>
+          <div style="color: rgba(255, 255, 255, 0.7);">RESPONSE TIME</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 5px;">
+            Edge-optimized average
+          </div>
+        </div>
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(72, 255, 130, 0.3);
+          border-radius: 8px;
+          padding: 24px;
+          text-align: center;
+        ">
+          <div style="color: var(--neon-green); font-size: 2rem; margin-bottom: 10px;">EDGE</div>
+          <div style="color: rgba(255, 255, 255, 0.7);">INFRASTRUCTURE</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 5px;">
+            Cloudflare Workers & Edge Functions
+          </div>
+        </div>
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(255, 215, 0, 0.3);
+          border-radius: 8px;
+          padding: 24px;
+          text-align: center;
+        ">
+          <div style="color: gold; font-size: 2rem; margin-bottom: 10px;">FREE</div>
+          <div style="color: rgba(255, 255, 255, 0.7);">COST</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 5px;">
+            Free-tier-first architecture
+          </div>
+        </div>
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(100, 200, 255, 0.3);
+          border-radius: 8px;
+          padding: 24px;
+          text-align: center;
+        ">
+          <div style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 10px;">SOON</div>
+          <div style="color: rgba(255, 255, 255, 0.7);">EDGE INFERENCE KIT</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 5px;">
+            Local-first inference on aarch64/Android
+          </div>
+        </div>
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(72, 255, 130, 0.3);
+          border-radius: 8px;
+          padding: 24px;
+          text-align: center;
+        ">
+          <div style="color: var(--neon-green); font-size: 2rem; margin-bottom: 10px;">SOON</div>
+          <div style="color: rgba(255, 255, 255, 0.7);">AMBIENT UI</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 5px;">
+            Invisible interface that adapts to context
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section style="
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      background: rgba(26, 26, 46, 0.8);
+      border-radius: 12px;
+      margin-bottom: 60px;
+    ">
+      <h2 style="
+        font-family: 'Orbitron', monospace;
+        font-size: 2rem;
+        color: var(--neon-red);
+        text-align: center;
+        margin-bottom: 40px;
+      ">
+        Featured Projects
+      </h2>
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      ">
+
+        <!-- JARVIS Agent Framework -->
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(255, 18, 56, 0.2);
+          border-radius: 8px;
+          padding: 24px;
+        ">
+          <h3 style="color: var(--neon-red); font-size: 1.3rem; margin-bottom: 12px;">
+            JARVIS Agent Framework
+          </h3>
+          <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Multi-agent orchestration via delegate_task &amp; cronjob. Skill-based extensible architecture
+            (100+ skills), persistent memory across sessions, Telegram/Discord/Slack gateway support.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="background: rgba(255, 18, 56, 0.2); color: var(--neon-red); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">Python</span>
+            <span style="background: rgba(255, 18, 56, 0.2); color: var(--neon-red); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">Rust</span>
+            <span style="background: rgba(255, 18, 56, 0.2); color: var(--neon-red); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">Docker</span>
+            <span style="background: rgba(255, 18, 56, 0.2); color: var(--neon-red); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">AWS</span>
+          </div>
+        </div>
+
+        <!-- HyperFrames Video Engine -->
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(39, 223, 255, 0.2);
+          border-radius: 8px;
+          padding: 24px;
+        ">
+          <h3 style="color: var(--neon-blue); font-size: 1.3rem; margin-bottom: 12px;">
+            HyperFrames Video Engine
+          </h3>
+          <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            HTML-to-video rendering pipeline. Motion graphics via GSAP + FFmpeg. Offline rendering for
+            Termux/Android. Used for social content, explainers, and brand videos.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="background: rgba(39, 223, 255, 0.2); color: var(--neon-blue); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">Python</span>
+            <span style="background: rgba(39, 223, 255, 0.2); color: var(--neon-blue); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">FFmpeg</span>
+            <span style="background: rgba(39, 223, 255, 0.2); color: var(--neon-blue); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">PIL</span>
+          </div>
+        </div>
+
+        <!-- RTK Rust Tooling Kit -->
+        <div style="
+          background: rgba(17, 17, 27, 0.8);
+          border: 1px solid rgba(72, 255, 130, 0.2);
+          border-radius: 8px;
+          padding: 24px;
+        ">
+          <h3 style="color: var(--neon-green); font-size: 1.3rem; margin-bottom: 12px;">
+            RTK (Rust Tooling Kit)
+          </h3>
+          <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Rust CLI filters for AI token optimization, performance monitoring, security guardrails
+            via the Mantis framework.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="background: rgba(72, 255, 130, 0.2); color: var(--neon-green); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">Rust</span>
+            <span style="background: rgba(72, 255, 130, 0.2); color: var(--neon-green); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">CLI</span>
+            <span style="background: rgba(72, 255, 130, 0.2); color: var(--neon-green); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem;">TDD</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Development Philosophy -->
+    <section style="
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      text-align: center;
+    ">
+      <h2 style="
+        font-family: 'Orbitron', monospace;
+        font-size: 2rem;
+        color: var(--neon-red);
+        margin-bottom: 30px;
+      ">
+        Development Philosophy
+      </h2>
+      <blockquote style="
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto 30px;
+        line-height: 1.8;
+        border-left: 3px solid var(--neon-red);
+        padding-left: 30px;
+        text-align: left;
+      ">
+        Build tools that disappear — the work should be the centerpiece, not the interface.
+      </blockquote>
+      <div style="
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+      ">
+        <div style="text-align: center;">
+          <div style="color: var(--neon-red); font-size: 1.5rem; margin-bottom: 5px;">Reproducible</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">Every script, every config, checked in</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="color: var(--neon-blue); font-size: 1.5rem; margin-bottom: 5px;">Portable</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">macOS to Termux to Docker</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="color: var(--neon-green); font-size: 1.5rem; margin-bottom: 5px;">Pragmatic</div>
+          <div style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">Working artifacts over perfect</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GitHub CTA -->
+    <section style="
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    ">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+        <svg height="40" viewBox="0 0 16 16" style="fill: var(--white);">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        <a href="https://github.com/mokshith7777" style="
+          color: var(--white);
+          text-decoration: none;
+          font-size: 1.2rem;
+          font-family: 'Orbitron', monospace;
+        ">
+          github.com/mokshith7777
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section style="
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      text-align: center;
+    ">
+      <h2 style="
+        font-family: 'Orbitron', monospace;
+        font-size: 2rem;
+        color: var(--neon-blue);
+        margin-bottom: 30px;
+      ">
+        Contact JARVIS' Creator
+      </h2>
+      <div style="
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      ">
+        <a href="mailto:mokshith@jarvis.ai" style="
+          color: var(--neon-red);
+          text-decoration: none;
+          font-size: 1.1rem;
+          padding: 12px 30px;
+          border: 1px solid var(--neon-red);
+          border-radius: 6px;
+          transition: all 0.3s;
+        ">📧 mokshith@jarvis.ai</a>
+
+        <a href="https://linkedin.com/in/mokshith7777" style="
+          color: var(--neon-blue);
+          text-decoration: none;
+          font-size: 1.1rem;
+          padding: 12px 30px;
+          border: 1px solid var(--neon-blue);
+          border-radius: 6px;
+          transition: all 0.3s;
+        ">💼 LinkedIn</a>
+
+        <a href="https://mokshith7777.github.io" style="
+          color: var(--neon-green);
+          text-decoration: none;
+          font-size: 1.1rem;
+          padding: 12px 30px;
+          border: 1px solid var(--neon-green);
+          border-radius: 6px;
+          transition: all 0.3s;
+        ">🌐 mokshith7777.github.io</a>
+      </div>
+    </section>
+
+  </div>
+
   <script>
   // Scroll-driven camera movement
   let scrollPosition = 0;
