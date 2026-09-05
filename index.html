@@ -2,24 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Jarvis AI Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="JARVIS AI — Creator & Lead Developer Mokshith Reddy. AI agent ecosystem, web development, 3D experiences.">
+  <title>JARVIS AI — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-deep: #070712;
-      --bg-charcoal: #0f0f1a;
-      --neon-red: #FF2457;
-      --neon-red-dim: #CC1D47;
-      --neon-blue: #27DFFF;
-      --neon-blue-dim: #1FABC9;
+      --bg-deep: #000000;
+      --bg-charcoal: #0a0a0a;
+      --bg-glass: rgba(10, 10, 15, 0.8);
+      --neon-red: #FF0034;
+      --neon-blue: #00D4FF;
       --neon-green: #48FF82;
       --gold: #FFD700;
       --amber: #FF8C00;
       --white: #ffffff;
-      --text-dim: #888899;
-      --glass-bg: rgba(10, 12, 20, 0.7);
-      --glass-border: rgba(255, 36, 87, 0.2);
+      --text-dim: #888888;
+      --text-muted: #666666;
+      --border-glass: rgba(255, 255, 255, 0.05);
+      --border-glow: rgba(255, 0, 52, 0.2);
     }
 
     * {
@@ -30,7 +31,6 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-timeline: --scroll-hero;
     }
 
     body {
@@ -38,10 +38,9 @@
       background: var(--bg-deep);
       color: var(--white);
       overflow-x: hidden;
-      position: relative;
     }
 
-    /* ===== Sticky scroll-frame container ===== */
+    /* ===== Scroll-frame container (sticky) ===== */
     .frame-container {
       position: fixed;
       top: 0;
@@ -56,212 +55,274 @@
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-      object-position: center;
+      object-position: center top;
     }
 
-    /* ===== Scroll-driven content ===== */
+    /* ===== Scrollable content ===== */
     .scrolling-content {
       position: relative;
       z-index: 2;
-      padding-top: 100vh;
-      min-height: 500vh;
     }
 
-    /* ===== Section base ===== */
+    /* ===== Full-screen sections ===== */
     section {
       position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 120px 40px;
+      width: 100%;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding: 120px 5vw;
+      box-sizing: border-box;
     }
 
-    section:nth-child(odd) { background: var(--bg-charcoal); }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
 
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
+    .section-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0.5;
       margin-bottom: 16px;
     }
 
-    .section-subtitle {
-      font-size: clamp(1rem, 1.5vw, 1.3rem);
-      font-weight: 300;
-      color: var(--text-dim);
-      margin-bottom: 48px;
-      max-width: 700px;
-      line-height: 1.6;
-    }
-
-    /* ===== Hero ===== */
-    .hero-title {
-      font-size: clamp(3rem, 8vw, 6rem);
+    h1.section-title, h2.section-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 900;
       letter-spacing: -0.03em;
-      line-height: 0.85;
+      line-height: 1.05;
     }
 
-    .hero-title .name {
+    h1.section-title .accent, h2.section-title .accent {
       color: var(--neon-red);
-      text-shadow: 0 0 30px rgba(255, 36, 87, 0.5);
+      text-shadow: 0 0 20px rgba(255, 0, 52, 0.5);
     }
 
-    .hero-title .role {
-      color: var(--neon-blue);
-      text-shadow: 0 0 30px rgba(39, 223, 255, 0.5);
+    .section-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: 300;
+      opacity: 0.7;
+      max-width: 750px;
+      line-height: 1.6;
+      margin-top: 16px;
     }
 
-    .hero-title .project {
-      color: var(--gold);
-      text-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-    }
-
-    .hero-bio {
-      margin-top: 32px;
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.7);
-      max-width: 700px;
-      line-height: 1.7;
-    }
-
-    /* ===== System Specs Grid ===== */
-    .specs-grid {
+    .section-content {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       margin-top: 48px;
     }
 
-    .spec-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 32px 24px;
-      text-align: center;
-      transition: all 0.3s ease;
+    .section-text {
+      max-width: 550px;
     }
 
-    .spec-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--neon-red);
-      box-shadow: 0 0 30px rgba(255, 36, 87, 0.2);
-    }
-
-    .spec-value {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .spec-value.red { color: var(--neon-red); }
-    .spec-value.blue { color: var(--neon-blue); }
-    .spec-value.green { color: var(--neon-green); }
-    .spec-value.gold { color: var(--gold); }
-
-    .spec-label {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-dim);
-    }
-
-    .spec-desc {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.4);
-      margin-top: 8px;
-    }
-
-    /* ===== Projects ===== */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    .section-visual {
+      display: flex;
+      flex-direction: column;
       gap: 24px;
-      margin-top: 48px;
     }
 
-    .project-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
+    /* ===== Glass cards ===== */
+    .glass-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
       padding: 32px;
       transition: all 0.3s ease;
     }
 
-    .project-card:hover {
-      border-color: var(--neon-blue);
-      box-shadow: 0 0 40px rgba(39, 223, 255, 0.15);
+    .glass-card:hover {
+      border-color: var(--neon-red);
+      box-shadow: 0 0 40px rgba(255, 0, 52, 0.1);
+      transform: translateY(-4px);
     }
 
-    .project-title {
-      font-size: 1.4rem;
-      font-weight: 700;
+    .glass-card .card-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
       margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
-    .project-title .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--neon-red);
-      flex-shrink: 0;
-    }
-
-    .project-desc {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.95rem;
+    .glass-card .card-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      opacity: 0.7;
       line-height: 1.6;
-      margin-bottom: 16px;
     }
 
-    .project-tags {
+    .glass-card .card-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      margin-top: 16px;
     }
 
     .tag {
-      background: rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.6);
+      display: inline-block;
       padding: 4px 12px;
       border-radius: 20px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* ===== Metrics grid ===== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .metric {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    .metric .value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .metric .value.red { color: var(--neon-red); }
+    .metric .value.blue { color: var(--neon-blue); }
+    .metric .value.green { color: var(--neon-green); }
+    .metric .value.gold { color: var(--gold); }
+
+    .metric .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+    }
+
+    .metric .desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ===== Project list ===== */
+    .project-list {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .project-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .project-item:hover {
+      border-color: var(--neon-blue);
+      background: rgba(0, 212, 255, 0.03);
+    }
+
+    .project-item .project-info h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .project-item .project-info p {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    .project-item .project-count {
+      font-size: 0.8rem;
+      color: var(--neon-red);
+      font-weight: 600;
+    }
+
+    /* ===== Skills ===== */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .skill-category h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--neon-blue);
+      margin-bottom: 8px;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     /* ===== Contact ===== */
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
     }
 
-    .contact-item:last-child { border-bottom: none; }
+    .contact-item {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
 
-    .contact-icon {
-      font-size: 1.5rem;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--glass-bg);
-      border-radius: 8px;
-      border: 1px solid var(--glass-border);
+    .contact-item:hover {
+      border-color: var(--neon-red);
+      transform: translateY(-4px);
+    }
+
+    .contact-item .contact-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .contact-item .contact-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.5;
+      margin-bottom: 8px;
+    }
+
+    .contact-item .contact-value {
+      font-size: 1.1rem;
+      font-weight: 500;
     }
 
     .contact-link {
       color: var(--neon-blue);
       text-decoration: none;
-      font-size: 1.1rem;
       transition: color 0.2s;
     }
 
@@ -271,9 +332,9 @@
     footer {
       text-align: center;
       padding: 60px 40px;
-      color: var(--text-dim);
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--border-glass);
+      font-size: 0.85rem;
+      opacity: 0.5;
     }
 
     /* ===== Scroll indicator ===== */
@@ -285,17 +346,18 @@
       z-index: 100;
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: rgba(255, 255, 255, 0.5);
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.4);
       font-size: 0.8rem;
       pointer-events: none;
+      transition: opacity 0.3s;
     }
 
-    .scroll-indicator.hide { opacity: 0; pointer-events: none; }
+    .scroll-indicator.hide { opacity: 0; }
 
     .scroll-bar {
-      width: 30px;
-      height: 4px;
+      width: 40px;
+      height: 3px;
       background: rgba(255, 255, 255, 0.15);
       border-radius: 2px;
       overflow: hidden;
@@ -308,185 +370,371 @@
       transition: width 0.1s;
     }
 
+    /* ===== Node indicator ===== */
+    .node-indicator {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .node-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .node-dot.active {
+      background: var(--neon-red);
+      box-shadow: 0 0 10px var(--neon-red);
+      transform: scale(1.3);
+    }
+
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
-      section { padding: 80px 20px; }
-      .specs-grid { grid-template-columns: 1fr; }
-      .hero-title { font-size: 2.5rem; }
+      section { padding: 100px 20px; }
+      .section-content { grid-template-columns: 1fr; gap: 40px; }
+      .node-indicator { display: none; }
+      .section-inner { padding: 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Scroll-frame container (sticky) -->
+  <!-- Scroll-frame container -->
   <div class="frame-container">
-    <img id="scroll-frame" src="frames/frame_0000.jpg" alt="JARVIS AI Cinematic Background" loading="eager">
+    <img id="scroll-frame" src="frames/frame_0000.jpg?v=2" alt="JARVIS AI Cinematic Background">
   </div>
 
   <!-- Scrollable content -->
   <div class="scrolling-content">
 
-    <!-- Hero -->
-    <section style="background: transparent; min-height: 100vh; padding-top: 100vh;">
-      <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px;">
-        <h1 class="hero-title" style="margin-bottom: 24px;">
-          <div class="name">Mokshith Reddy</div>
-          <div class="role">Creator & Lead Developer — JARVIS AI</div>
+    <!-- Hero / Origin Protocol -->
+    <section>
+      <div class="section-inner">
+        <div class="section-label">01 / ORIGIN PROTOCOL</div>
+        <h1 class="section-title">
+          <span class="accent">BUILT TO</span><br>
+          ACT.
         </h1>
-        <p class="hero-bio">
-          Building AI that feels less like software and more like a collaborator.
-          JARVIS AI coordinates tools, agents, and workflows across 12+ LLM providers
-          — not a chatbot, but a true AI collaborator that executes complex multi-agent tasks.
+        <p class="section-subtitle">
+          Most assistants stop at the answer.<br>
+          <strong style="color: var(--white); opacity: 0.9;">JARVIS starts there.</strong>
         </p>
+        <div style="margin-top: 48px; font-size: 1.1rem; opacity: 0.7; max-width: 600px;">
+          USER → JARVIS → MODEL → TOOL → RESULT
+        </div>
+      </div>
+    </section>
+
+    <!-- Why JARVIS / Capability Matrix -->
+    <section style="background: var(--bg-charcoal);">
+      <div class="section-inner">
+        <div class="section-label">02 / CAPABILITY MATRIX</div>
+        <h2 class="section-title">
+          WHY <span class="accent">JARVIS</span> EXISTS
+        </h2>
+        <p class="section-subtitle">
+          JARVIS began as an experiment to move beyond the ordinary chatbot. The mission is to create
+          a personal command layer that can understand intent, coordinate models, select tools and
+          turn a request into an executable workflow.
+        </p>
+        <p class="section-subtitle" style="margin-top: 16px;">
+          Instead of treating AI as a single conversation window, JARVIS is designed as an ecosystem:
+          reasoning, routing, automation, creation and feedback working together around the user.
+        </p>
+
+        <div class="section-content" style="margin-top: 32px;">
+          <div class="section-text">
+            <h3 class="section-label">Content Engine</h3>
+            <h3 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 12px;">
+              <span style="color: var(--neon-blue);">ONE CORE.</span>
+            </h3>
+            <p style="opacity: 0.7; line-height: 1.6; margin-bottom: 24px;">
+              Turn ideas into interfaces, visuals, written concepts and structured creative outputs.
+            </p>
+          </div>
+          <div class="section-visual">
+            <div class="glass-card">
+              <div class="card-title" style="color: var(--neon-red);">CREATIVE</div>
+              <div class="card-desc">AI-powered content engine for visual, written, and structured output generation</div>
+            </div>
+            <div class="glass-card">
+              <div class="card-title" style="color: var(--neon-blue);">AUTOMATION</div>
+              <div class="card-desc">Automated workflows that chain reasoning, routing, and tool execution</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- System Architecture -->
     <section>
-      <h2 class="section-title" style="color: var(--neon-red);">JARVIS AI — System Architecture</h2>
-      <p class="section-subtitle">
-        The person behind JARVIS — built from the ground up to move beyond answering questions
-        and actually coordinate tools, agents, and workflows across multiple AI models.
-      </p>
-      <div class="specs-grid">
-        <div class="spec-card">
-          <div class="spec-value red">12+</div>
-          <div class="spec-label">MODEL ROUTING</div>
-          <div class="spec-desc">OpenRouter, Anthropic, OpenAI, Google, DeepSeek, xAI, local</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-value blue">~800ms</div>
-          <div class="spec-label">RESPONSE TIME</div>
-          <div class="spec-desc">Edge-optimized average</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-value green">EDGE</div>
-          <div class="spec-label">INFRASTRUCTURE</div>
-          <div class="spec-desc">Cloudflare Workers & Edge Functions</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-value gold">FREE</div>
-          <div class="spec-label">COST</div>
-          <div class="spec-desc">Free-tier-first architecture</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-value blue">SOON</div>
-          <div class="spec-label">EDGE INFERENCE</div>
-          <div class="spec-desc">Local-first inference on aarch64/Android</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-value green">SOON</div>
-          <div class="spec-label">AMBIENT UI</div>
-          <div class="spec-desc">Invisible interface that adapts to context</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Featured Projects -->
-    <section style="background: transparent;">
-      <h2 class="section-title" style="color: var(--neon-blue);">Featured Projects</h2>
-      <p class="section-subtitle">
-        Each project is built to work across platforms — from macOS to Termux/aarch64 to Docker.
-      </p>
-      <div class="projects-grid">
-        <div class="project-card">
-          <h3 class="project-title"><span class="dot" style="background: var(--neon-red);"></span>JARVIS Agent Framework</h3>
-          <p class="project-desc">
-            Multi-agent orchestration via delegate_task & cronjob. Skill-based extensible architecture
-            (100+ skills), persistent memory across sessions, Telegram/Discord/Slack gateway support.
-          </p>
-          <div class="project-tags">
-            <span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">Docker</span><span class="tag">AWS</span>
+      <div class="section-inner">
+        <div class="section-label">SYSTEM ARCHITECTURE</div>
+        <h2 class="section-title">
+          <span class="accent">JARVIS</span> AI<br>
+          System Specs
+        </h2>
+        <p class="section-subtitle">
+          Model routing across 12+ providers, edge deployment, free-tier-first architecture.
+        </p>
+        <div class="metrics-grid">
+          <div class="metric">
+            <div class="value red">12+</div>
+            <div class="label">MODEL ROUTING</div>
+            <div class="desc">OpenRouter, Anthropic, OpenAI, Google, DeepSeek, xAI, local</div>
           </div>
-        </div>
-        <div class="project-card">
-          <h3 class="project-title"><span class="dot" style="background: var(--neon-blue);"></span>HyperFrames Video Engine</h3>
-          <p class="project-desc">
-            HTML-to-video rendering pipeline. Motion graphics via GSAP + FFmpeg.
-            Offline rendering for Termux/Android. Used for social content, explainers.
-          </p>
-          <div class="project-tags">
-            <span class="tag">Python</span><span class="tag">FFmpeg</span><span class="tag">PIL</span><span class="tag">React</span>
+          <div class="metric">
+            <div class="value blue">~800ms</div>
+            <div class="label">RESPONSE TIME</div>
+            <div class="desc">Edge-optimized average</div>
           </div>
-        </div>
-        <div class="project-card">
-          <h3 class="project-title"><span class="dot" style="background: var(--neon-green);"></span>RTK (Rust Tooling Kit)</h3>
-          <p class="project-desc">
-            Rust CLI filters for AI token optimization, performance monitoring,
-            security guardrails via the Mantis framework.
-          </p>
-          <div class="project-tags">
-            <span class="tag">Rust</span><span class="tag">CLI</span><span class="tag">TDD</span><span class="tag">Security</span>
+          <div class="metric">
+            <div class="value green">EDGE</div>
+            <div class="label">INFRASTRUCTURE</div>
+            <div class="desc">Cloudflare Workers & Edge Functions</div>
+          </div>
+          <div class="metric">
+            <div class="value gold">FREE</div>
+            <div class="label">COST</div>
+            <div class="desc">Free-tier-first architecture</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Development Philosophy -->
+    <!-- JARVIS Products -->
+    <section style="background: var(--bg-charcoal);">
+      <div class="section-inner">
+        <div class="section-label">01 / JARVIS</div>
+        <h2 class="section-title">
+          <span class="accent">THE JARVIS</span><br>
+          AI Chatbot
+        </h2>
+        <p class="section-subtitle">
+          Flagship personal AI command interface designed around voice and text interaction, tool
+          routing, agent workflows and cinematic HUD feedback.
+        </p>
+        <div class="section-content" style="margin-top: 32px;">
+          <div class="section-text">
+            <h3 style="color: var(--neon-red); font-size: 1.4rem; margin-bottom: 16px;">JARVIS AI</h3>
+            <p style="opacity: 0.7; line-height: 1.6; margin-bottom: 20px;">
+              AI assistant / command system with multi-model routing, persistent memory, 100+ skills,
+              Telegram/Discord/Slack gateway support.
+            </p>
+            <a href="https://jarvis-ai-3ba39.web.app" class="contact-link" style="font-weight: 500;">
+              LAUNCH JARVIS ↗
+            </a>
+          </div>
+          <div class="section-visual">
+            <div class="glass-card">
+              <div class="card-title" style="color: var(--neon-red);">EDGE INFERENCE KIT</div>
+              <div class="card-desc">Local-first inference pipeline for edge devices. Zero-cloud, zero-latency AI on aarch64/Android.</div>
+              <div class="card-tags">
+                <span class="tag">SOON</span>
+                <span class="tag">Python</span>
+                <span class="tag">ONNX</span>
+              </div>
+            </div>
+            <div class="glass-card">
+              <div class="card-title" style="color: var(--neon-blue);">AMBIENT UI</div>
+              <div class="card-desc">Invisible interface layer. The AI adapts to your context without demanding screen attention.</div>
+              <div class="card-tags">
+                <span class="tag">SOON</span>
+                <span class="tag">React</span>
+                <span class="tag">Context API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Creator -->
     <section>
-      <h2 class="section-title" style="color: var(--gold);">Development Philosophy</h2>
-      <blockquote style="
-        font-size: 1.5rem;
-        font-style: italic;
-        color: rgba(255, 255, 255, 0.8);
-        max-width: 800px;
-        margin: 0 auto 40px;
-        line-height: 1.6;
-        border-left: 3px solid var(--neon-red);
-        padding-left: 32px;
-        text-align: center;
-      ">
-        Build tools that disappear — the work should be the centerpiece, not the interface.
-      </blockquote>
-      <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap;">
-        <div style="text-align: center; min-width: 150px;">
-          <div style="color: var(--neon-red); font-size: 1.5rem; font-weight: 700;">Reproducible</div>
-          <div style="color: var(--text-dim); font-size: 0.9rem;">Every script, every config, checked in</div>
+      <div class="section-inner">
+        <div class="section-label">04 / CREATOR NODE</div>
+        <h2 class="section-title">
+          MOKSHITH<br>
+          <span class="accent">REDDY</span>
+        </h2>
+        <p class="section-subtitle">
+          Creator & Lead Developer at JARVIS AI. Student and technology-driven builder focused on
+          AI assistants, web applications, games and futuristic interfaces.
+        </p>
+        <p class="section-subtitle" style="margin-top: 16px;">
+          I created JARVIS as a long-term experiment in building a personal AI command system that
+          can organize complexity and turn ambitious ideas into real digital systems.
+        </p>
+
+        <div class="section-content" style="margin-top: 32px;">
+          <div class="section-text">
+            <div class="section-label">SKILLS</div>
+            <h3 style="color: var(--neon-blue); font-size: 1.2rem; margin: 12px 0;">Tech Stack</h3>
+            <div class="skills-grid">
+              <div>
+                <h3 style="color: var(--neon-red); font-size: 0.9rem; margin-bottom: 8px;">Languages</h3>
+                <div class="skill-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">Rust</span>
+                  <span class="tag">TypeScript</span>
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">Bash</span>
+                </div>
+              </div>
+              <div>
+                <h3 style="color: var(--neon-blue); font-size: 0.9rem; margin-bottom: 8px;">AI/ML</h3>
+                <div class="skill-list">
+                  <span class="tag">TensorFlow</span>
+                  <span class="tag">PyTorch</span>
+                  <span class="tag">ONNX</span>
+                  <span class="tag">HuggingFace</span>
+                </div>
+              </div>
+              <div>
+                <h3 style="color: var(--neon-green); font-size: 0.9rem; margin-bottom: 8px;">Infra</h3>
+                <div class="skill-list">
+                  <span class="tag">Docker</span>
+                  <span class="tag">AWS</span>
+                  <span class="tag">Cloudflare</span>
+                  <span class="tag">FFmpeg</span>
+                </div>
+              </div>
+              <div>
+                <h3 style="color: var(--gold); font-size: 0.9rem; margin-bottom: 8px;">Frontend</h3>
+                <div class="skill-list">
+                  <span class="tag">React</span>
+                  <span class="tag">TailwindCSS</span>
+                  <span class="tag">Next.js</span>
+                  <span class="tag">HyperFrames</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-visual">
+            <h3 style="color: var(--neon-red); font-size: 1.2rem; margin-bottom: 16px; margin-top: 20px;">Project Archive</h3>
+            <div class="project-list">
+              <div class="project-item">
+                <div class="project-info">
+                  <h3>JARVIS AI</h3>
+                  <p>AI assistant / command system</p>
+                </div>
+                <span class="project-count">04 NODES</span>
+              </div>
+              <div class="project-item">
+                <div class="project-info">
+                  <h3>SALAAR STREETS</h3>
+                  <p>2D fighter game</p>
+                </div>
+                <span class="project-count">SOON</span>
+              </div>
+              <div class="project-item">
+                <div class="project-info">
+                  <h3>SUBWAY ZOOMER</h3>
+                  <p>Endless runner web game</p>
+                </div>
+                <span class="project-count">SOON</span>
+              </div>
+              <div class="project-item">
+                <div class="project-info">
+                  <h3>EDGE INFERENCE KIT</h3>
+                  <p>AI infrastructure concept</p>
+                </div>
+                <span class="project-count">SOON</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div style="text-align: center; min-width: 150px;">
-          <div style="color: var(--neon-blue); font-size: 1.5rem; font-weight: 700;">Portable</div>
-          <div style="color: var(--text-dim); font-size: 0.9rem;">macOS to Termux to Docker</div>
-        </div>
-        <div style="text-align: center; min-width: 150px;">
-          <div style="color: var(--neon-green); font-size: 1.5rem; font-weight: 700;">Pragmatic</div>
-          <div style="color: var(--text-dim); font-size: 0.9rem;">Working artifacts over perfect</div>
-        </div>
+      </div>
+    </section>
+
+    <!-- Future Directive -->
+    <section style="background: var(--bg-charcoal);">
+      <div class="section-inner">
+        <div class="section-label">05 / FUTURE DIRECTIVE <span style="color: var(--neon-green);">EVOLVING</span></div>
+        <h2 class="section-title">
+          <span class="accent">THE FUTURE</span><br>
+          IS ACTIVE.
+        </h2>
+        <p class="section-subtitle">
+          A personal AI should not only know things. <strong style="color: var(--white); opacity: 0.9;">It should help make things happen.</strong>
+        </p>
+        <p class="section-subtitle" style="margin-top: 16px;">
+          The long-term vision is a unified AI environment where conversation becomes execution:
+          research can become a plan, a plan can become a workflow, and a workflow can become a
+          finished product.
+        </p>
       </div>
     </section>
 
     <!-- Contact -->
-    <section style="background: transparent;">
-      <h2 class="section-title" style="color: var(--neon-red);">Contact & Connect</h2>
-      <div style="max-width: 600px; margin: 0 auto;">
-        <div class="contact-item">
-          <div class="contact-icon">📧</div>
-          <div>
-            <div style="color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;">Email</div>
-            <a href="mailto:mokshith@jarvis.ai" class="contact-link">mokshith@jarvis.ai</a>
+    <section>
+      <div class="section-inner">
+        <div class="section-label">TRANSMISSION — READY</div>
+        <h2 class="section-title">
+          <span class="accent">OPEN A</span><br>
+          CHANNEL.
+        </h2>
+        <p class="section-subtitle">
+          AI experiments, web builds, collaborations and ambitious ideas.
+        </p>
+
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div class="contact-label">EMAIL</div>
+            <div class="contact-value">
+              <a href="mailto:mokshithreddysingana@gmail.com" class="contact-link" style="color: var(--white);">
+                mokshithreddysingana@gmail.com
+              </a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💻</div>
+            <div class="contact-label">GITHUB</div>
+            <div class="contact-value">
+              <a href="https://github.com/mokshith7777" class="contact-link" style="color: var(--neon-blue);">
+                github.com/mokshith7777
+              </a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🚀</div>
+            <div class="contact-label">PRODUCT</div>
+            <div class="contact-value">
+              <a href="https://jarvis-ai-3ba39.web.app" class="contact-link" style="color: var(--neon-red);">
+                jarvis-ai-3ba39.web.app
+              </a>
+            </div>
           </div>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon">💼</div>
-          <div>
-            <div style="color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;">LinkedIn</div>
-            <a href="https://linkedin.com/in/mokshith7777" class="contact-link">linkedin.com/in/mokshith7777</a>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">🌐</div>
-          <div>
-            <div style="color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;">Portfolio</div>
-            <a href="https://mokshith7777.github.io" class="contact-link">mokshith7777.github.io</a>
-          </div>
+
+        <div style="text-align: center; margin-top: 48px;">
+          <a href="mailto:mokshithreddysingana@gmail.com" class="contact-link" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 40px;
+            border: 1px solid var(--neon-red);
+            border-radius: 30px;
+            font-weight: 500;
+            color: var(--neon-red);
+            text-decoration: none;
+            transition: all 0.3s;
+          ">
+            TRANSMIT MESSAGE ↗
+          </a>
         </div>
       </div>
     </section>
-
-    <!-- Footer -->
-    <footer>
-      <p>© 2026 Mokshith Reddy — Creator & Lead Developer, JARVIS AI</p>
-      <p style="margin-top: 8px; color: var(--text-dim);">Video: mokshith7777.github.io/jarvis-ai-portfolio</p>
-    </footer>
 
   </div>
 
@@ -496,25 +744,27 @@
     <div class="scroll-bar"><div class="scroll-bar-fill" id="scroll-bar-fill"></div></div>
   </div>
 
-  <!-- BGM (optional) -->
-  <audio id="bgm" loop muted preload="auto">
-    <source src="portfolio-bgm.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Node indicator (right side) -->
+  <div class="node-indicator" id="node-indicator">
+    <div class="node-dot active" data-section="0"></div>
+    <div class="node-dot" data-section="1"></div>
+    <div class="node-dot" data-section="2"></div>
+    <div class="node-dot" data-section="3"></div>
+    <div class="node-dot" data-section="4"></div>
+    <div class="node-dot" data-section="5"></div>
+  </div>
 
   <script>
     // ===== Scroll-driven frame animation =====
-    const totalFrames = 255;  // Number of generated frames
+    const totalFrames = 255;
     const frameContainer = document.getElementById('scroll-frame');
     const frames = [];
-
-    // Preload frames (lazy-load in chunks)
     let preloadedCount = 0;
-    const preloadBatch = 15;
 
     function preloadFrames() {
-      for (let i = 0; i < preloadBatch && preloadedCount < totalFrames; i++, preloadedCount++) {
+      for (let i = 0; i < 15 && preloadedCount < totalFrames; i++, preloadedCount++) {
         const img = new Image();
-        img.src = `frames/frame_${String(preloadedCount).padStart(4, '0')}.jpg`;
+        img.src = `frames/frame_${String(preloadedCount).padStart(4, '0')}.jpg?v=2`;
         frames[preloadedCount] = img;
       }
       if (preloadedCount < totalFrames) {
@@ -522,32 +772,21 @@
       }
     }
 
-    // Start preloading
     preloadFrames();
 
-    // Update frame based on scroll position
     function updateFrame() {
       const scrollTop = window.scrollY;
       const docHeight = document.body.scrollHeight - window.innerHeight;
-      const scrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
 
-      // Map scroll progress to frame index
-      const frameIndex = Math.min(
-        totalFrames - 1,
-        Math.max(0, Math.floor(scrollProgress * totalFrames))
-      );
+      const frameIndex = Math.min(totalFrames - 1, Math.max(0, Math.floor(progress * totalFrames)));
 
-      // Update image source if frame is preloaded
       if (frames[frameIndex] && frames[frameIndex].complete) {
         frameContainer.src = frames[frameIndex].src;
-      } else {
-        // Fallback: use closest preloaded frame
-        const fallbackIndex = Math.min(
-          Math.floor(scrollProgress * Math.min(preloadedCount, totalFrames - 1)),
-          Math.min(preloadedCount, totalFrames - 1) - 1
-        );
-        if (fallbackIndex >= 0 && frames[fallbackIndex] && frames[fallbackIndex].complete) {
-          frameContainer.src = frames[fallbackIndex].src;
+      } else if (preloadedCount > 0) {
+        const fallback = Math.min(frameIndex, preloadedCount - 1);
+        if (frames[fallback] && frames[fallback].complete) {
+          frameContainer.src = frames[fallback].src;
         }
       }
     }
@@ -559,6 +798,7 @@
         window.requestAnimationFrame(function() {
           updateFrame();
           updateScrollIndicator();
+          updateNodeIndicator();
           scrollTick = false;
         });
         scrollTick = true;
@@ -569,49 +809,41 @@
     function updateScrollIndicator() {
       const scrollTop = window.scrollY;
       const docHeight = document.body.scrollHeight - window.innerHeight;
-      const scrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
 
-      // Hide scroll indicator when scrolled
       const indicator = document.getElementById('scroll-indicator');
-      if (scrollTop > window.innerHeight) {
+      if (scrollTop > window.innerHeight * 0.5) {
         indicator.classList.add('hide');
       } else {
         indicator.classList.remove('hide');
       }
 
-      // Update scroll bar fill
-      const fill = document.getElementById('scroll-bar-fill');
-      fill.style.width = Math.min(100, scrollProgress * 100) + '%';
+      document.getElementById('scroll-bar-fill').style.width = Math.min(100, progress * 100) + '%';
     }
 
-    // ===== Play BGM on first interaction =====
-    const bgm = document.getElementById('bgm');
-    let bgmStarted = false;
+    // ===== Node indicator =====
+    function updateNodeIndicator() {
+      const scrollTop = window.scrollY;
+      const sectionHeight = window.innerHeight;
+      const current = Math.floor(scrollTop / sectionHeight);
+      const maxSection = 5;
 
-    function tryPlayBGM() {
-      if (!bgmStarted) {
-        bgm.volume = 0.3;
-        bgm.play().catch(() => {});
-        bgmStarted = true;
-        document.removeEventListener('scroll', tryPlayBGM);
-        document.removeEventListener('click', tryPlayBGM);
-      }
+      document.querySelectorAll('.node-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === Math.min(current, maxSection));
+      });
     }
 
-    document.addEventListener('scroll', tryPlayBGM);
-    document.addEventListener('click', tryPlayBGM);
-
-    // ===== Initial load =====
+    // ===== Initial =====
     window.addEventListener('load', function() {
       updateFrame();
       updateScrollIndicator();
+      updateNodeIndicator();
       preloadFrames();
     });
 
-    // ===== Reduced motion support =====
+    // ===== Reduced motion =====
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      // Show first frame only, disable scroll animation
-      frameContainer.src = frames[0]?.src || `frames/frame_0000.jpg`;
+      frameContainer.src = 'frames/frame_0000.jpg?v=2';
     }
   </script>
 </body>
