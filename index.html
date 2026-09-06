@@ -1,306 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <title>JARVIS AI — Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Mokshith Reddy — JARVIS AI portfolio">
+  <title>Mokshith Reddy — JARVIS AI</title>
   <style>
-    :root {
-      --cyan: #00ffff;
-      --cyan-dim: #0088aa;
-      --red: #ff0033;
-      --red-dim: #aa0022;
-      --copper-light: #e09f67;
-      --copper-dark: #8c4c23;
-      --metal-light: #444;
-      --metal-dark: #111;
-      --metal-edge: #666;
-      --bg-deep: #020202;
-      --bg-glass: rgba(5, 5, 10, 0.75);
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { 
-      background: var(--bg-deep); 
-      color: #fff; 
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ===== 3D ENVIRONMENT SCENE ===== */
-    .scene {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      perspective: 1200px; /* Strong depth perspective */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: radial-gradient(circle at center, #0a1122 0%, #000 70%); /* Ambient blue dark haze */
-    }
-
-    /* Volumetric smoke/haze overlay */
-    .atmosphere {
-      position: absolute;
-      inset: -50%;
-      background-image: 
-        radial-gradient(ellipse at center, rgba(0,255,255,0.05) 0%, transparent 40%),
-        repeating-linear-gradient(45deg, rgba(255,0,52,0.02) 0px, transparent 10px, transparent 20px, rgba(0,255,255,0.02) 30px);
-      filter: blur(10px);
-      animation: haze-drift 30s linear infinite;
-      pointer-events: none;
-      z-index: 0; /* Behind reactor */
-    }
-    .atmosphere.front {
-      z-index: 2; /* In front of reactor */
-      background-image: radial-gradient(ellipse at center, rgba(0,255,255,0.08) 0%, transparent 50%);
-      opacity: 0.6;
-    }
-
-    /* Floor plane and cables */
-    .floor {
-      position: absolute;
-      width: 200vw;
-      height: 200vw;
-      background: 
-        radial-gradient(circle at center, transparent 300px, #000 800px),
-        repeating-linear-gradient(0deg, #111 0px, #111 2px, #050505 3px, #050505 40px),
-        repeating-linear-gradient(90deg, #111 0px, #111 2px, #050505 3px, #050505 40px);
-      transform-style: preserve-3d;
-      transform: rotateX(75deg) translateZ(-400px);
-      box-shadow: inset 0 0 200px #000;
-    }
-
-    /* The actual 3D Reactor Assembly */
-    .reactor-assembly {
-      position: relative;
-      width: 600px;
-      height: 600px;
-      transform-style: preserve-3d;
-      /* Tilt down and rotate to show depth like reference image */
-      transform: rotateX(30deg) rotateY(15deg) rotateZ(0deg); 
-      animation: gentle-hover 10s ease-in-out infinite;
-      z-index: 1;
-    }
-
-    /* --- LAYERS (Back to Front) --- */
-
-    /* Layer 1 (Deepest): Red Core Tunnel */
-    .layer-deep-core {
-      position: absolute;
-      inset: 150px;
-      transform: translateZ(-150px);
-      background: radial-gradient(circle, var(--red) 0%, var(--red-dim) 50%, #000 80%);
-      clip-path: polygon(50% 100%, 0 0, 100% 0); /* Inverted triangle */
-      box-shadow: 0 0 100px var(--red), inset 0 0 50px #000;
-      animation: pulse-core 2s alternate infinite;
-    }
-    /* Ribs inside the tunnel to create depth */
-    .tunnel-rib {
-      position: absolute;
-      border: 4px solid var(--red-dim);
-      clip-path: polygon(50% 100%, 0 0, 100% 0);
-    }
-    .rib-1 { inset: 120px; transform: translateZ(-100px); opacity: 0.8; }
-    .rib-2 { inset: 90px; transform: translateZ(-50px); opacity: 0.6; }
-
-    /* Layer 2: Copper Coils & Mechanics */
-    .layer-mechanics {
-      position: absolute;
-      inset: 50px;
-      transform: translateZ(-20px);
-      border-radius: 50%;
-      border: 30px dashed var(--copper-dark); /* Fake coils */
-      background: 
-        repeating-radial-gradient(circle at center, transparent 0, transparent 40px, var(--metal-dark) 42px, var(--metal-dark) 50px),
-        conic-gradient(from 0deg, var(--metal-light), var(--metal-dark), var(--metal-light), var(--metal-dark));
-      box-shadow: inset 0 0 50px #000, 0 0 20px #000;
-      opacity: 0.9;
-    }
-    /* Central piston hub */
-    .mechanics-hub {
-      position: absolute;
-      inset: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--metal-light), var(--metal-dark));
-      border: 5px solid var(--copper-light);
-      box-shadow: 0 10px 20px #000;
-      transform: translateZ(10px);
-    }
-
-    /* Layer 3: Heavy Metal Outer Chassis */
-    .layer-chassis {
-      position: absolute;
-      inset: 0;
-      transform: translateZ(0);
-      /* Inverted triangle frame with thick borders */
-      background: conic-gradient(from 180deg, var(--metal-dark), var(--metal-light), var(--metal-dark));
-      clip-path: polygon(50% 100%, 0 0, 100% 0);
-      /* Cut out the center to reveal depths */
-      -webkit-mask-image: radial-gradient(circle at center, transparent 200px, black 205px);
-      mask-image: radial-gradient(circle at center, transparent 200px, black 205px);
-      box-shadow: inset 0 0 20px var(--metal-edge), 0 20px 50px rgba(0,0,0,0.8);
-    }
-
-    /* Layer 4 (Top): Cyan Floating Ring & Prongs */
-    .layer-cyan-ring {
-      position: absolute;
-      inset: 100px;
-      transform: translateZ(80px); /* distinctly ABOVE the chassis */
-      border-radius: 50%;
-      border: 8px solid var(--cyan);
-      box-shadow: 
-        0 0 30px var(--cyan), 
-        inset 0 0 20px var(--cyan),
-        0 0 80px rgba(0,255,255,0.4); /* Volumetric bloom */
-      animation: spin-ring 15s linear infinite;
-    }
-    /* Outer prongs attached to ring */
-    .cyan-prong {
-      position: absolute;
-      width: 20px;
-      height: 60px;
-      background: var(--cyan);
-      box-shadow: 0 0 20px var(--cyan);
-      border-radius: 10px;
-    }
-    .prong-1 { top: -30px; left: calc(50% - 10px); }
-    .prong-2 { bottom: 20px; right: -10px; transform: rotate(-60deg); }
-    .prong-3 { bottom: 20px; left: -10px; transform: rotate(60deg); }
-
-    /* Floating particles / sparks */
-    .spark {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: var(--cyan);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--cyan);
-      animation: float-spark 4s infinite linear;
-    }
-
-    /* --- ANIMATIONS --- */
-    @keyframes gentle-hover {
-      0%, 100% { transform: rotateX(30deg) rotateY(15deg) rotateZ(0deg) translateY(0); }
-      50% { transform: rotateX(32deg) rotateY(12deg) rotateZ(2deg) translateY(-20px); }
-    }
-    @keyframes pulse-core {
-      0% { opacity: 0.8; box-shadow: 0 0 80px var(--red), inset 0 0 50px #000; transform: translateZ(-150px) scale(0.95); }
-      100% { opacity: 1; box-shadow: 0 0 150px var(--red), inset 0 0 20px #000; transform: translateZ(-150px) scale(1.05); }
-    }
-    @keyframes spin-ring {
-      from { transform: translateZ(80px) rotate(0deg); }
-      to { transform: translateZ(80px) rotate(360deg); }
-    }
-    @keyframes haze-drift {
-      0% { transform: scale(1) rotate(0deg) translateX(0); }
-      50% { transform: scale(1.2) rotate(10deg) translateX(-5%); }
-      100% { transform: scale(1) rotate(0deg) translateX(0); }
-    }
-    @keyframes float-spark {
-      0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0;}
-      20% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { transform: translate3d(100px, -200px, 150px) scale(0); opacity: 0;}
-    }
-
-    /* ===== MAIN PORTAL CONTENT (Overlay) ===== */
-    .content { position: relative; z-index: 10; padding: 120px 6vw; min-height: 100vh; }
-    .glass-panel {
-      background: var(--bg-glass);
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(16px);
-      border-radius: 20px;
-      padding: 60px;
-      max-width: 1000px;
-      margin: 0 auto;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-    
-    .label { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.2em; color: var(--cyan); margin-bottom: 20px; }
-    h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
-    p { font-size: 1.1rem; color: #aaa; line-height: 1.6; margin-bottom: 40px; max-width: 600px; }
-    
-    .link-btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 16px 40px;
-      border: 2px solid var(--cyan);
-      border-radius: 30px;
-      color: var(--cyan);
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: 1px;
-      transition: all 0.3s;
-      background: rgba(0, 255, 255, 0.05);
-    }
-    .link-btn:hover {
-      background: rgba(0, 255, 255, 0.2);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-    }
-
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+    :root { --ink:#e9eff5; --muted:#9ba8b4; --cyan:#79e9ff; --hot:#ff4a41; --amber:#ffc15a; --black:#020305; }
+    * { box-sizing:border-box; }
+    html { background:var(--black); scroll-behavior:smooth; }
+    body { margin:0; min-height:100%; background:var(--black); color:var(--ink); font-family:"Barlow Condensed",Arial,sans-serif; overflow-x:hidden; }
+    .cinema { position:fixed; z-index:0; inset:0; overflow:hidden; background:#010204; }
+    .cinema video { position:absolute; width:100%; height:100%; object-fit:cover; object-position:center; filter:contrast(1.08) saturate(.96) brightness(.81); transform:scale(1.025); }
+    .cinema::before { content:""; position:absolute; z-index:1; inset:0; background:linear-gradient(90deg,rgba(1,3,6,.72) 0%,rgba(1,3,6,.32) 37%,rgba(1,3,6,.06) 66%,rgba(1,3,6,.42) 100%); pointer-events:none; }
+    .cinema::after { content:""; position:absolute; z-index:2; inset:0; opacity:.22; pointer-events:none; background-image:radial-gradient(ellipse at 50% 35%, transparent 42%,#000 100%), repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 4px); mix-blend-mode:screen; }
+    .topbar { position:fixed; z-index:5; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:clamp(18px,3vw,42px) clamp(20px,5vw,76px); font-family:"DM Mono",monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; pointer-events:none; }
+    .brand { color:#fff; font-weight:500; } .status { color:var(--cyan); display:flex; gap:8px; align-items:center; } .status i { width:7px; height:7px; background:var(--cyan); border-radius:50%; box-shadow:0 0 12px var(--cyan); animation:blink 1.6s infinite; }
+    main { position:relative; z-index:3; }
+    section { min-height:100svh; position:relative; padding:clamp(98px,13vh,150px) clamp(22px,9vw,150px) clamp(58px,8vh,100px); display:flex; align-items:center; }
+    .copy { width:min(495px,100%); opacity:0; transform:translateY(28px); transition:opacity .55s ease,transform .7s cubic-bezier(.2,.8,.2,1); }
+    .copy.visible { opacity:1; transform:none; }
+    .right { margin-left:auto; } .mid { margin-left:clamp(0px,8vw,150px); }
+    .kicker { font:500 10px/1.2 "DM Mono",monospace; letter-spacing:.18em; color:var(--cyan); text-transform:uppercase; margin:0 0 19px; }
+    h1,h2 { font-weight:800; letter-spacing:-.035em; text-transform:uppercase; line-height:.82; margin:0; text-wrap:balance; }
+    h1 { font-size:clamp(52px,8.5vw,136px); max-width:680px; } h2 { font-size:clamp(46px,6vw,94px); }
+    h1 em,h2 em { font-style:normal; color:var(--hot); text-shadow:0 0 30px rgba(255,74,65,.34); }
+    .lede { max-width:420px; margin:28px 0 0; font-size:clamp(19px,2vw,25px); line-height:1.13; color:#d5dde5; font-weight:400; }
+    .bodycopy { max-width:390px; color:var(--muted); margin:23px 0 0; font:400 13px/1.75 "DM Mono",monospace; }
+    .action { display:inline-flex; gap:12px; align-items:center; margin-top:31px; padding:14px 18px; border:1px solid rgba(121,233,255,.72); color:#edfdff; background:rgba(4,19,26,.55); text-decoration:none; font:500 11px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; box-shadow:0 0 0 1px rgba(121,233,255,.08) inset,0 0 28px rgba(0,208,255,.13); transition:.2s ease; }
+    .action:hover { background:rgba(57,188,216,.23); box-shadow:0 0 34px rgba(91,224,255,.4); transform:translateY(-2px); }
+    .scrollmark { position:absolute; left:clamp(22px,5vw,76px); bottom:28px; color:#c2cbd3; font:10px "DM Mono",monospace; letter-spacing:.12em; writing-mode:vertical-rl; text-transform:uppercase; } .scrollmark::after { content:""; display:block; height:46px; width:1px; margin:10px auto 0; background:linear-gradient(var(--cyan),transparent); }
+    .arsenal { width:min(460px,100%); margin-top:30px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:1px solid rgba(121,233,255,.34); border-left:1px solid rgba(121,233,255,.34); background:rgba(0,8,12,.44); }
+    .arsenal div { min-height:72px; display:flex; flex-direction:column; justify-content:center; padding:13px; border-right:1px solid rgba(121,233,255,.25); border-bottom:1px solid rgba(121,233,255,.25); } .arsenal small { color:var(--cyan); font:10px "DM Mono",monospace; } .arsenal b { margin-top:5px; font-size:20px; font-weight:600; }
+    .projects { border-left:1px solid var(--hot); padding-left:21px; margin-top:27px; display:grid; gap:16px; } .project { font:500 16px "DM Mono",monospace; color:#f3f5f7; } .project span { color:var(--muted); font-size:11px; display:block; margin-top:5px; }
+    .timeline { margin-top:31px; padding-left:20px; border-left:1px solid var(--cyan); display:grid; gap:23px; } .timeline div { position:relative; } .timeline div::before { content:""; position:absolute; left:-24px; top:5px; width:7px; height:7px; background:var(--cyan); box-shadow:0 0 13px var(--cyan); } .timeline strong { font-size:25px; font-weight:600; } .timeline p { font:11px/1.5 "DM Mono",monospace; color:var(--muted); margin:4px 0 0; }
+    .contact { text-align:center; margin:auto; } .contact .lede { margin-left:auto; margin-right:auto; }
+    .contact .action { border-color:var(--amber); color:#fff3d6; background:rgba(45,25,5,.46); }
+    .progress { position:fixed; z-index:6; right:18px; top:50%; transform:translateY(-50%); display:grid; gap:8px; } .progress span { width:3px; height:22px; background:rgba(255,255,255,.24); transition:.2s; } .progress span.on { background:var(--cyan); box-shadow:0 0 12px var(--cyan); }
+    @keyframes blink { 50% { opacity:.32; } }
+    @media (max-width:720px) { .cinema video { object-position:56% center; filter:contrast(1.07) brightness(.66); } .cinema::before{background:linear-gradient(90deg,rgba(1,3,6,.82),rgba(1,3,6,.40) 62%,rgba(1,3,6,.55));} section{align-items:flex-end; min-height:92svh; padding:90px 23px 70px;} .right,.mid{margin-left:0;} .copy{max-width:370px;} h1{font-size:clamp(53px,17vw,80px);} h2{font-size:clamp(42px,14vw,65px);} .lede{font-size:20px;} .topbar{padding:19px 22px;} .status{font-size:8px;} .scrollmark{display:none;} .progress{right:9px;} .progress span{height:16px;} .arsenal{margin-top:24px;} }
+    @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto}.copy{transition:none}.status i{animation:none} }
   </style>
 </head>
 <body>
-
-<!-- 3D SCI-FI ENGINE ROOM BACKGROUND -->
-<div class="scene">
-  <div class="atmosphere"></div>
-  <div class="floor"></div>
-  
-  <div class="reactor-assembly" id="reactor">
-    <!-- Tunnel Ribs (Deepest) -->
-    <div class="tunnel-rib rib-1"></div>
-    <div class="tunnel-rib rib-2"></div>
-    
-    <!-- Red Core -->
-    <div class="layer-deep-core"></div>
-    
-    <!-- Mechanics / Coils -->
-    <div class="layer-mechanics">
-      <div class="mechanics-hub"></div>
-    </div>
-    
-    <!-- Metal Chassis Frame -->
-    <div class="layer-chassis"></div>
-    
-    <!-- High Cyan Ring (Front) -->
-    <div class="layer-cyan-ring">
-      <div class="cyan-prong prong-1"></div>
-      <div class="cyan-prong prong-2"></div>
-      <div class="cyan-prong prong-3"></div>
-    </div>
-  </div>
-  
-  <div class="atmosphere front"></div>
-</div>
-
-<!-- FLOATING PORTAL CONTENT -->
-<div class="content">
-  <div class="glass-panel">
-    <div class="label">SYSTEM ONLINE // JARVIS PROTOCOL</div>
-    <h1>MOKSHITH REDDY<br>JARVIS AI CORE</h1>
-    <p>
-      Personal AI command system. Built to execute intent, orchestrate models, and turn conversation into automated action. This is the central hub.
-    </p>
-    <a href="https://jarvis-ai-3ba39.web.app" class="link-btn">ENTER THE PORTAL ↗</a>
-  </div>
-</div>
-
-<script>
-  // Add floating sparks in 3D space
-  const reactor = document.getElementById('reactor');
-  for(let i=0; i<15; i++) {
-    let spark = document.createElement('div');
-    spark.className = 'spark';
-    // Random positions around the core
-    spark.style.left = (200 + Math.random() * 200) + 'px';
-    spark.style.top = (200 + Math.random() * 200) + 'px';
-    spark.style.transform = `translateZ(${Math.random() * 200}px)`;
-    spark.style.animationDelay = (Math.random() * 4) + 's';
-    reactor.appendChild(spark);
-  }
-</script>
-
+  <div class="cinema" aria-hidden="true"><video id="suitVideo" muted playsinline preload="auto" poster="assets/ironman-source/frame_00.jpg"><source src="assets/ironman-scroll.mp4" type="video/mp4"></video></div>
+  <header class="topbar"><div class="brand">Mokshith Reddy / JARVIS AI</div><div class="status"><i></i>System online</div></header>
+  <aside class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></aside>
+  <main>
+    <section data-scene="0"><div class="copy right"><p class="kicker">01 / Origin protocol</p><h1>Mokshith<br><em>Reddy.</em></h1><p class="lede">AI engineer building JARVIS AI.</p><a class="action" href="https://jarvis-ai-3ba39.web.app" target="_blank" rel="noopener">Launch JARVIS <b>↗</b></a></div><div class="scrollmark">Scroll to initialize</div></section>
+    <section data-scene="1"><div class="copy right"><p class="kicker">02 / The mission</p><h2>Built to<br><em>act.</em></h2><p class="lede">Most assistants stop at the answer. JARVIS starts there.</p></div></section>
+    <section data-scene="2"><div class="copy right"><p class="kicker">03 / About</p><h2>Intent into<br><em>action.</em></h2><p class="bodycopy">JARVIS AI is Mokshith’s personal AI command system: a focused space to orchestrate models, automate work, and turn a conversation into an outcome.</p></div></section>
+    <section data-scene="3"><div class="copy"><p class="kicker">04 / Core arsenal</p><h2>Systems<br><em>online.</em></h2><div class="arsenal"><div><small>01</small><b>AI agents</b></div><div><small>02</small><b>Web systems</b></div><div><small>03</small><b>Automation</b></div><div><small>04</small><b>Media tools</b></div></div></div></section>
+    <section data-scene="4"><div class="copy"><p class="kicker">05 / Featured work</p><h2>One core.<br><em>Many moves.</em></h2><div class="projects"><div class="project">JARVIS AI<span>Command center for AI-assisted action</span></div><div class="project">Portfolio systems<span>Cinematic interfaces with real motion</span></div><div class="project">Agent workflows<span>Research, coding, media and automation</span></div></div><a class="action" href="https://jarvis-ai-3ba39.web.app" target="_blank" rel="noopener">Open the product ↗</a></div></section>
+    <section data-scene="5"><div class="copy"><p class="kicker">06 / Build trajectory</p><h2>From idea<br>to <em>system.</em></h2><div class="timeline"><div><strong>Explore</strong><p>Find the right interface and intelligence for the task.</p></div><div><strong>Build</strong><p>Turn the plan into practical tools and workflows.</p></div><div><strong>Operate</strong><p>Make the system useful beyond a single answer.</p></div></div></div></section>
+    <section data-scene="6"><div class="copy contact"><p class="kicker">07 / Connection channel</p><h2>Ready to<br><em>initialize?</em></h2><p class="lede">Enter JARVIS AI and see the command system in action.</p><a class="action" href="https://jarvis-ai-3ba39.web.app" target="_blank" rel="noopener">Enter JARVIS AI ↗</a></div></section>
+  </main>
+  <script>
+    const video=document.getElementById('suitVideo'); const sections=[...document.querySelectorAll('section')]; const bars=[...document.querySelectorAll('.progress span')]; let duration=7.041667, ticking=false;
+    video.addEventListener('loadedmetadata',()=>{duration=video.duration||duration; render();},{once:true});
+    function render(){ const max=Math.max(1,document.documentElement.scrollHeight-innerHeight); const p=Math.min(1,Math.max(0,scrollY/max)); if(video.readyState>=1){ const target=Math.min(duration-.035,p*(duration-.035)); if(Math.abs(video.currentTime-target)>.025) video.currentTime=target; } const active=Math.min(6,Math.floor(p*7)); sections.forEach((s,i)=>{const r=s.getBoundingClientRect(); s.querySelector('.copy').classList.toggle('visible',r.top<innerHeight*.72&&r.bottom>innerHeight*.28)}); bars.forEach((b,i)=>b.classList.toggle('on',i===active)); ticking=false; }
+    addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(render);ticking=true;}},{passive:true}); addEventListener('resize',render); video.addEventListener('canplay',render,{once:true}); render();
+  </script>
 </body>
 </html>
