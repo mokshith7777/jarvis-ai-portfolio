@@ -3,430 +3,304 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta name="description" content="JARVIS AI — Creator & Lead Developer Mokshith Reddy.">
   <title>JARVIS AI — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --neon-red: #FF0034;
-      --neon-blue: #00D4FF;
-      --neon-green: #48FF82;
-      --gold: #FFD700;
-      --white: #ffffff;
-      --text-muted: #555;
+      --cyan: #00ffff;
+      --cyan-dim: #0088aa;
+      --red: #ff0033;
+      --red-dim: #aa0022;
+      --copper-light: #e09f67;
+      --copper-dark: #8c4c23;
+      --metal-light: #444;
+      --metal-dark: #111;
+      --metal-edge: #666;
+      --bg-deep: #020202;
       --bg-glass: rgba(5, 5, 10, 0.75);
-      --border-glass: rgba(255,255,255,0.06);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family:'Inter',sans-serif; background:#000; color:#fff; overflow-x:hidden; }
+    html, body { 
+      background: var(--bg-deep); 
+      color: #fff; 
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
 
-    /* ===== ARC REACTOR BACKGROUND ===== */
-    #arc-bg {
+    /* ===== 3D ENVIRONMENT SCENE ===== */
+    .scene {
       position: fixed;
       inset: 0;
       z-index: 0;
-      background: #000;
+      perspective: 1200px; /* Strong depth perspective */
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      background: radial-gradient(circle at center, #0a1122 0%, #000 70%); /* Ambient blue dark haze */
     }
 
-    .arc-svg {
-      width: min(90vw, 90vh);
-      height: min(90vw, 90vh);
-      opacity: 0.35;
-      animation: arc-breathe 4s ease-in-out infinite;
+    /* Volumetric smoke/haze overlay */
+    .atmosphere {
+      position: absolute;
+      inset: -50%;
+      background-image: 
+        radial-gradient(ellipse at center, rgba(0,255,255,0.05) 0%, transparent 40%),
+        repeating-linear-gradient(45deg, rgba(255,0,52,0.02) 0px, transparent 10px, transparent 20px, rgba(0,255,255,0.02) 30px);
+      filter: blur(10px);
+      animation: haze-drift 30s linear infinite;
+      pointer-events: none;
+      z-index: 0; /* Behind reactor */
+    }
+    .atmosphere.front {
+      z-index: 2; /* In front of reactor */
+      background-image: radial-gradient(ellipse at center, rgba(0,255,255,0.08) 0%, transparent 50%);
+      opacity: 0.6;
     }
 
-    @keyframes arc-breathe {
-      0%, 100% { opacity: 0.30; transform: scale(1); }
-      50%       { opacity: 0.42; transform: scale(1.02); }
+    /* Floor plane and cables */
+    .floor {
+      position: absolute;
+      width: 200vw;
+      height: 200vw;
+      background: 
+        radial-gradient(circle at center, transparent 300px, #000 800px),
+        repeating-linear-gradient(0deg, #111 0px, #111 2px, #050505 3px, #050505 40px),
+        repeating-linear-gradient(90deg, #111 0px, #111 2px, #050505 3px, #050505 40px);
+      transform-style: preserve-3d;
+      transform: rotateX(75deg) translateZ(-400px);
+      box-shadow: inset 0 0 200px #000;
     }
 
-    /* outer ring glow */
-    .arc-outer-tri { animation: tri-spin-slow 18s linear infinite; transform-origin: 50% 50%; }
-    .arc-inner-tri { animation: tri-spin-rev  10s linear infinite; transform-origin: 50% 50%; }
-    .arc-core-ring { animation: core-pulse 2.5s ease-in-out infinite; transform-origin: 50% 50%; }
-    .arc-electric-1 { animation: electric-flash 1.8s ease-in-out infinite; }
-    .arc-electric-2 { animation: electric-flash 2.3s ease-in-out infinite 0.4s; }
-    .arc-electric-3 { animation: electric-flash 1.5s ease-in-out infinite 0.9s; }
-
-    @keyframes tri-spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes tri-spin-rev  { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-    @keyframes core-pulse    {
-      0%,100% { r: 55; opacity: 1; }
-      50%     { r: 60; opacity: 0.8; }
-    }
-    @keyframes electric-flash {
-      0%,100% { opacity: 0.5; stroke-width: 1; }
-      50%     { opacity: 1;   stroke-width: 2; }
-    }
-
-    /* scrollable content */
-    .content { position:relative; z-index:1; }
-
-    section {
+    /* The actual 3D Reactor Assembly */
+    .reactor-assembly {
       position: relative;
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 120px 6vw;
+      width: 600px;
+      height: 600px;
+      transform-style: preserve-3d;
+      /* Tilt down and rotate to show depth like reference image */
+      transform: rotateX(30deg) rotateY(15deg) rotateZ(0deg); 
+      animation: gentle-hover 10s ease-in-out infinite;
+      z-index: 1;
     }
-    section.dark { background: rgba(5,5,10,0.92); }
-    .inner { max-width: 1160px; margin:0 auto; width:100%; }
 
-    .label { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.22em; opacity:.45; margin-bottom:14px; }
-    h1,h2 { font-size:clamp(2.4rem,6vw,4.6rem); font-weight:900; letter-spacing:-.03em; line-height:1.06; }
-    .red  { color:var(--neon-red);  text-shadow:0 0 24px rgba(255,0,52,.55); }
-    .blue { color:var(--neon-blue); text-shadow:0 0 24px rgba(0,212,255,.55); }
-    .sub  { font-size:clamp(.95rem,2vw,1.25rem); font-weight:300; opacity:.7; max-width:700px; line-height:1.65; margin-top:14px; }
+    /* --- LAYERS (Back to Front) --- */
 
-    /* glass card */
-    .card {
+    /* Layer 1 (Deepest): Red Core Tunnel */
+    .layer-deep-core {
+      position: absolute;
+      inset: 150px;
+      transform: translateZ(-150px);
+      background: radial-gradient(circle, var(--red) 0%, var(--red-dim) 50%, #000 80%);
+      clip-path: polygon(50% 100%, 0 0, 100% 0); /* Inverted triangle */
+      box-shadow: 0 0 100px var(--red), inset 0 0 50px #000;
+      animation: pulse-core 2s alternate infinite;
+    }
+    /* Ribs inside the tunnel to create depth */
+    .tunnel-rib {
+      position: absolute;
+      border: 4px solid var(--red-dim);
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+    }
+    .rib-1 { inset: 120px; transform: translateZ(-100px); opacity: 0.8; }
+    .rib-2 { inset: 90px; transform: translateZ(-50px); opacity: 0.6; }
+
+    /* Layer 2: Copper Coils & Mechanics */
+    .layer-mechanics {
+      position: absolute;
+      inset: 50px;
+      transform: translateZ(-20px);
+      border-radius: 50%;
+      border: 30px dashed var(--copper-dark); /* Fake coils */
+      background: 
+        repeating-radial-gradient(circle at center, transparent 0, transparent 40px, var(--metal-dark) 42px, var(--metal-dark) 50px),
+        conic-gradient(from 0deg, var(--metal-light), var(--metal-dark), var(--metal-light), var(--metal-dark));
+      box-shadow: inset 0 0 50px #000, 0 0 20px #000;
+      opacity: 0.9;
+    }
+    /* Central piston hub */
+    .mechanics-hub {
+      position: absolute;
+      inset: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--metal-light), var(--metal-dark));
+      border: 5px solid var(--copper-light);
+      box-shadow: 0 10px 20px #000;
+      transform: translateZ(10px);
+    }
+
+    /* Layer 3: Heavy Metal Outer Chassis */
+    .layer-chassis {
+      position: absolute;
+      inset: 0;
+      transform: translateZ(0);
+      /* Inverted triangle frame with thick borders */
+      background: conic-gradient(from 180deg, var(--metal-dark), var(--metal-light), var(--metal-dark));
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+      /* Cut out the center to reveal depths */
+      -webkit-mask-image: radial-gradient(circle at center, transparent 200px, black 205px);
+      mask-image: radial-gradient(circle at center, transparent 200px, black 205px);
+      box-shadow: inset 0 0 20px var(--metal-edge), 0 20px 50px rgba(0,0,0,0.8);
+    }
+
+    /* Layer 4 (Top): Cyan Floating Ring & Prongs */
+    .layer-cyan-ring {
+      position: absolute;
+      inset: 100px;
+      transform: translateZ(80px); /* distinctly ABOVE the chassis */
+      border-radius: 50%;
+      border: 8px solid var(--cyan);
+      box-shadow: 
+        0 0 30px var(--cyan), 
+        inset 0 0 20px var(--cyan),
+        0 0 80px rgba(0,255,255,0.4); /* Volumetric bloom */
+      animation: spin-ring 15s linear infinite;
+    }
+    /* Outer prongs attached to ring */
+    .cyan-prong {
+      position: absolute;
+      width: 20px;
+      height: 60px;
+      background: var(--cyan);
+      box-shadow: 0 0 20px var(--cyan);
+      border-radius: 10px;
+    }
+    .prong-1 { top: -30px; left: calc(50% - 10px); }
+    .prong-2 { bottom: 20px; right: -10px; transform: rotate(-60deg); }
+    .prong-3 { bottom: 20px; left: -10px; transform: rotate(60deg); }
+
+    /* Floating particles / sparks */
+    .spark {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cyan);
+      animation: float-spark 4s infinite linear;
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes gentle-hover {
+      0%, 100% { transform: rotateX(30deg) rotateY(15deg) rotateZ(0deg) translateY(0); }
+      50% { transform: rotateX(32deg) rotateY(12deg) rotateZ(2deg) translateY(-20px); }
+    }
+    @keyframes pulse-core {
+      0% { opacity: 0.8; box-shadow: 0 0 80px var(--red), inset 0 0 50px #000; transform: translateZ(-150px) scale(0.95); }
+      100% { opacity: 1; box-shadow: 0 0 150px var(--red), inset 0 0 20px #000; transform: translateZ(-150px) scale(1.05); }
+    }
+    @keyframes spin-ring {
+      from { transform: translateZ(80px) rotate(0deg); }
+      to { transform: translateZ(80px) rotate(360deg); }
+    }
+    @keyframes haze-drift {
+      0% { transform: scale(1) rotate(0deg) translateX(0); }
+      50% { transform: scale(1.2) rotate(10deg) translateX(-5%); }
+      100% { transform: scale(1) rotate(0deg) translateX(0); }
+    }
+    @keyframes float-spark {
+      0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0;}
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translate3d(100px, -200px, 150px) scale(0); opacity: 0;}
+    }
+
+    /* ===== MAIN PORTAL CONTENT (Overlay) ===== */
+    .content { position: relative; z-index: 10; padding: 120px 6vw; min-height: 100vh; }
+    .glass-panel {
       background: var(--bg-glass);
-      border: 1px solid var(--border-glass);
-      backdrop-filter: blur(14px);
-      border-radius:14px;
-      padding:28px;
-      transition: border-color .3s, transform .3s;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
-    .card:hover { border-color:var(--neon-red); transform:translateY(-3px); }
-    .card h3 { font-size:1.15rem; font-weight:600; margin-bottom:10px; }
-    .card p  { font-size:.88rem; opacity:.65; line-height:1.6; }
-    .card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
-    .tag { padding:3px 11px; border-radius:20px; font-size:.72rem; font-weight:500;
-           background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); color:rgba(255,255,255,.6); }
-
-    /* two-col grid */
-    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:52px; margin-top:44px; }
-    .col   { display:flex; flex-direction:column; gap:20px; }
-
-    /* metrics */
-    .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-top:44px; }
-    .metric  { background:var(--bg-glass); border:1px solid var(--border-glass); backdrop-filter:blur(12px);
-               border-radius:12px; padding:26px 18px; text-align:center; }
-    .metric .val { font-size:2rem; font-weight:800; margin-bottom:4px; }
-    .metric .val.r { color:var(--neon-red); }
-    .metric .val.b { color:var(--neon-blue); }
-    .metric .val.g { color:var(--neon-green); }
-    .metric .lbl { font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; opacity:.55; }
-    .metric .dsc { font-size:.7rem; color:var(--text-muted); margin-top:4px; }
-
-    /* cta button */
-    .cta {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:14px 36px; border:1px solid var(--neon-red); border-radius:30px;
-      font-weight:600; font-size:.95rem; color:var(--neon-red);
-      text-decoration:none; transition:background .3s;
-      margin-top:36px;
+    
+    .label { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.2em; color: var(--cyan); margin-bottom: 20px; }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+    p { font-size: 1.1rem; color: #aaa; line-height: 1.6; margin-bottom: 40px; max-width: 600px; }
+    
+    .link-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 16px 40px;
+      border: 2px solid var(--cyan);
+      border-radius: 30px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      background: rgba(0, 255, 255, 0.05);
     }
-    .cta:hover { background:rgba(255,0,52,.1); }
-    .cta.blue-btn { border-color:var(--neon-blue); color:var(--neon-blue); }
-    .cta.blue-btn:hover { background:rgba(0,212,255,.08); }
-
-    /* contact */
-    .contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:30px; }
-    .ci { display:flex; align-items:center; gap:18px; padding:22px; background:var(--bg-glass);
-          border:1px solid var(--border-glass); border-radius:12px; }
-    .ci-icon { font-size:1.6rem; }
-    .ci-lbl { font-size:.68rem; text-transform:uppercase; letter-spacing:.18em; opacity:.4; }
-    .ci-val a { color:var(--neon-blue); text-decoration:none; font-weight:600; font-size:.9rem; }
-    .ci-val a:hover { text-decoration:underline; }
-
-    /* side nav dots */
-    .nav-dots { position:fixed; right:26px; top:50%; transform:translateY(-50%); z-index:99;
-                display:flex; flex-direction:column; gap:14px; }
-    .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.18); transition:all .3s; }
-    .dot.on { background:var(--neon-red); box-shadow:0 0 8px var(--neon-red); transform:scale(1.4); }
-
-    /* scroll hint */
-    .hint { position:fixed; bottom:26px; left:50%; transform:translateX(-50%); z-index:99; text-align:center; }
-    .hint span { font-size:.7rem; text-transform:uppercase; letter-spacing:.2em; opacity:.35; }
-    .hint-bar { width:36px; height:2px; background:rgba(255,255,255,.12); border-radius:2px; margin:6px auto 0; overflow:hidden; }
-    .hint-fill { height:100%; background:var(--neon-red); width:0%; transition:width .08s; }
-    .hint.gone { opacity:0; pointer-events:none; }
-
-    @media(max-width:768px){
-      section { padding:90px 18px; }
-      .grid2 { grid-template-columns:1fr; gap:30px; }
-      .nav-dots { display:none; }
-      h1,h2 { font-size:clamp(2rem,8vw,3rem); }
+    .link-btn:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
+
   </style>
 </head>
 <body>
 
-<!-- ===== ARC REACTOR BACKGROUND (background only, never in portal content) ===== -->
-<div id="arc-bg">
-  <svg class="arc-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <!-- Primary: neon red → white glow -->
-      <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stop-color="#FF0034"/>
-        <stop offset="55%"  stop-color="#FF4466"/>
-        <stop offset="100%" stop-color="#FFFFFF"/>
-      </linearGradient>
-      <!-- Secondary: neon blue → green -->
-      <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stop-color="#00D4FF"/>
-        <stop offset="100%" stop-color="#48FF82"/>
-      </linearGradient>
-      <!-- Glow filters -->
-      <filter id="redGlow" x="-40%" y="-40%" width="180%" height="180%">
-        <feGaussianBlur stdDeviation="8" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="blueGlow" x="-40%" y="-40%" width="180%" height="180%">
-        <feGaussianBlur stdDeviation="6" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="coreGlow" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="12" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-
-    <!-- Outer triangle: neon red gradient, slowly rotating -->
-    <g class="arc-outer-tri" filter="url(#redGlow)">
-      <polygon points="300,30 560,500 40,500"
-               fill="none" stroke="url(#redGrad)" stroke-width="3" opacity="0.9"/>
-      <!-- white glow vertex dots -->
-      <circle cx="300" cy="30"  r="8" fill="#FFFFFF" opacity="0.9"/>
-      <circle cx="560" cy="500" r="8" fill="#FFFFFF" opacity="0.9"/>
-      <circle cx="40"  cy="500" r="8" fill="#FFFFFF" opacity="0.9"/>
-      <!-- edge tick marks -->
-      <line x1="300" y1="30"  x2="300" y2="80"  stroke="#FF0034" stroke-width="2" opacity="0.7"/>
-      <line x1="560" y1="500" x2="520" y2="465" stroke="#FF0034" stroke-width="2" opacity="0.7"/>
-      <line x1="40"  y1="500" x2="80"  y2="465" stroke="#FF0034" stroke-width="2" opacity="0.7"/>
-    </g>
-
-    <!-- Middle triangle: neon blue/green, counter-rotating -->
-    <g class="arc-inner-tri" filter="url(#blueGlow)">
-      <polygon points="300,110 490,440 110,440"
-               fill="none" stroke="url(#blueGrad)" stroke-width="2" opacity="0.85"/>
-      <circle cx="300" cy="110" r="5" fill="#00D4FF" opacity="0.9"/>
-      <circle cx="490" cy="440" r="5" fill="#48FF82" opacity="0.9"/>
-      <circle cx="110" cy="440" r="5" fill="#00D4FF" opacity="0.9"/>
-    </g>
-
-    <!-- Electric signal arcs: neon blue/green -->
-    <g filter="url(#blueGlow)">
-      <!-- top vertex down -->
-      <line x1="300" y1="30"  x2="300" y2="110" class="arc-electric-1"
-            stroke="#48FF82" stroke-width="1.5" opacity="0.8"/>
-      <!-- bottom-right vertex -->
-      <line x1="560" y1="500" x2="490" y2="440" class="arc-electric-2"
-            stroke="#00D4FF" stroke-width="1.5" opacity="0.8"/>
-      <!-- bottom-left vertex -->
-      <line x1="40"  y1="500" x2="110" y2="440" class="arc-electric-3"
-            stroke="#48FF82" stroke-width="1.5" opacity="0.8"/>
-      <!-- inner cross signals -->
-      <line x1="300" y1="110" x2="490" y2="440" class="arc-electric-1"
-            stroke="#00D4FF" stroke-width="0.8" opacity="0.3"/>
-      <line x1="300" y1="110" x2="110" y2="440" class="arc-electric-2"
-            stroke="#48FF82" stroke-width="0.8" opacity="0.3"/>
-      <line x1="490" y1="440" x2="110" y2="440" class="arc-electric-3"
-            stroke="#00D4FF" stroke-width="0.8" opacity="0.3"/>
-    </g>
-
-    <!-- Core: pulsing white/red circle -->
-    <g filter="url(#coreGlow)">
-      <circle cx="300" cy="310" r="70" fill="#050010" stroke="#FF0034" stroke-width="2.5" class="arc-core-ring"/>
-      <circle cx="300" cy="310" r="52" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-      <circle cx="300" cy="310" r="36" fill="none" stroke="rgba(0,212,255,0.25)" stroke-width="1" class="arc-electric-2"/>
-      <!-- center hub -->
-      <circle cx="300" cy="310" r="10" fill="#FF0034" opacity="0.9"/>
-      <circle cx="300" cy="310" r="5"  fill="#FFFFFF"/>
-    </g>
-
-    <!-- Outer decorative rings -->
-    <circle cx="300" cy="310" r="120" fill="none" stroke="rgba(255,0,52,0.12)" stroke-width="1" stroke-dasharray="6 8"/>
-    <circle cx="300" cy="310" r="160" fill="none" stroke="rgba(0,212,255,0.10)" stroke-width="1" stroke-dasharray="4 10"/>
-  </svg>
+<!-- 3D SCI-FI ENGINE ROOM BACKGROUND -->
+<div class="scene">
+  <div class="atmosphere"></div>
+  <div class="floor"></div>
+  
+  <div class="reactor-assembly" id="reactor">
+    <!-- Tunnel Ribs (Deepest) -->
+    <div class="tunnel-rib rib-1"></div>
+    <div class="tunnel-rib rib-2"></div>
+    
+    <!-- Red Core -->
+    <div class="layer-deep-core"></div>
+    
+    <!-- Mechanics / Coils -->
+    <div class="layer-mechanics">
+      <div class="mechanics-hub"></div>
+    </div>
+    
+    <!-- Metal Chassis Frame -->
+    <div class="layer-chassis"></div>
+    
+    <!-- High Cyan Ring (Front) -->
+    <div class="layer-cyan-ring">
+      <div class="cyan-prong prong-1"></div>
+      <div class="cyan-prong prong-2"></div>
+      <div class="cyan-prong prong-3"></div>
+    </div>
+  </div>
+  
+  <div class="atmosphere front"></div>
 </div>
 
-<!-- ===== MAIN PORTAL CONTENT ===== -->
+<!-- FLOATING PORTAL CONTENT -->
 <div class="content">
-
-  <!-- HERO -->
-  <section>
-    <div class="inner">
-      <div class="label">01 / ORIGIN PROTOCOL</div>
-      <h1><span class="red">BUILT TO</span><br>ACT.</h1>
-      <p class="sub">
-        Most assistants stop at the answer.<br>
-        <strong style="color:#fff;opacity:.95;">JARVIS starts there.</strong>
-      </p>
-      <a href="https://jarvis-ai-3ba39.web.app" class="cta" target="_blank" rel="noopener">
-        LAUNCH JARVIS ↗
-      </a>
-    </div>
-  </section>
-
-  <!-- WHY JARVIS -->
-  <section class="dark">
-    <div class="inner">
-      <div class="label">02 / CAPABILITY MATRIX</div>
-      <h2>WHY <span class="blue">JARVIS</span> EXISTS</h2>
-      <p class="sub">
-        JARVIS is a personal command layer — it understands intent, coordinates models,
-        selects tools and turns a request into an executed workflow. Not just a chatbot.
-        An ecosystem.
-      </p>
-      <div class="grid2">
-        <div class="col">
-          <div class="card">
-            <h3 style="color:var(--neon-red)">CREATIVE</h3>
-            <p>AI content engine — visuals, writing, structured output generation</p>
-            <div class="card-tags"><span class="tag">Claude Code</span><span class="tag">Higgsfield MCP</span><span class="tag">Seedance 2.5</span></div>
-          </div>
-          <div class="card">
-            <h3 style="color:var(--neon-blue)">AUTOMATION</h3>
-            <p>Workflows that chain reasoning, routing and tool execution across 12+ providers</p>
-            <div class="card-tags"><span class="tag">Edge Inference</span><span class="tag">Cloudflare</span><span class="tag">OpenRouter</span></div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="metrics" style="margin-top:0">
-            <div class="metric"><div class="val r">12+</div><div class="lbl">Model Routing</div><div class="dsc">OpenAI, Anthropic, Google…</div></div>
-            <div class="metric"><div class="val b">~800ms</div><div class="lbl">Response Time</div><div class="dsc">Edge-optimized</div></div>
-            <div class="metric"><div class="val g">EDGE</div><div class="lbl">Infrastructure</div><div class="dsc">Cloudflare Workers</div></div>
-            <div class="metric"><div class="val r">FREE</div><div class="lbl">Cost</div><div class="dsc">Free-tier-first</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- JARVIS AI PRODUCT -->
-  <section>
-    <div class="inner">
-      <div class="label">03 / THE PRODUCT</div>
-      <h2>THE <span class="red">JARVIS</span><br>AI CHATBOT</h2>
-      <p class="sub">
-        Flagship AI command interface — voice and text, tool routing, agent workflows,
-        cinematic HUD feedback. Multi-model. Persistent memory. 100+ skills.
-        Telegram / Discord / Slack gateways.
-      </p>
-      <div class="grid2" style="margin-top:36px">
-        <div class="col">
-          <div class="card">
-            <h3 style="color:var(--neon-red)">EDGE INFERENCE KIT</h3>
-            <p>Local-first inference pipeline. Zero-cloud, zero-latency AI on aarch64 / Android.</p>
-            <div class="card-tags"><span class="tag">Soon</span><span class="tag">ONNX</span><span class="tag">Python</span></div>
-          </div>
-          <div class="card">
-            <h3 style="color:var(--neon-blue)">AMBIENT UI</h3>
-            <p>Invisible interface. The AI adapts to your context without demanding screen attention.</p>
-            <div class="card-tags"><span class="tag">Soon</span><span class="tag">React</span><span class="tag">Context API</span></div>
-          </div>
-        </div>
-        <div class="col" style="justify-content:center">
-          <a href="https://jarvis-ai-3ba39.web.app" class="cta" target="_blank" rel="noopener" style="align-self:flex-start">
-            OPEN JARVIS AI ↗
-          </a>
-          <p style="opacity:.5;font-size:.85rem;margin-top:16px">jarvis-ai-3ba39.web.app</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CREATOR -->
-  <section class="dark" style="text-align:center">
-    <div class="inner" style="text-align:center">
-      <div class="label" style="text-align:center">04 / CREATOR NODE</div>
-      <h1>MOKSHITH<br><span class="red">REDDY</span></h1>
-      <p class="sub" style="margin:16px auto 0;max-width:560px">
-        Creator & Lead Developer — JARVIS AI.<br>
-        Student and technology-driven builder: AI assistants, web apps,
-        games and futuristic interfaces.
-      </p>
-      <div class="metrics" style="margin-top:44px;text-align:center">
-        <div class="metric"><div class="val r">100+</div><div class="lbl">Skills</div></div>
-        <div class="metric"><div class="val b">12+</div><div class="lbl">Models Routed</div></div>
-        <div class="metric"><div class="val g">EDGE</div><div class="lbl">Infrastructure</div></div>
-        <div class="metric"><div class="val r" style="font-size:1.5rem">∞</div><div class="lbl">Iterations</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section>
-    <div class="inner">
-      <div class="label">TRANSMISSION — READY</div>
-      <h2><span class="red">OPEN A</span><br>CHANNEL.</h2>
-      <p class="sub">AI experiments, web builds, collaborations and ambitious ideas.</p>
-      <div class="contact-grid">
-        <div class="ci">
-          <div class="ci-icon">📧</div>
-          <div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:mokshithreddysingana@gmail.com">mokshithreddysingana@gmail.com</a></div></div>
-        </div>
-        <div class="ci">
-          <div class="ci-icon">💻</div>
-          <div><div class="ci-lbl">GitHub</div><div class="ci-val"><a href="https://github.com/mokshith7777">github.com/mokshith7777</a></div></div>
-        </div>
-        <div class="ci">
-          <div class="ci-icon">🚀</div>
-          <div><div class="ci-lbl">Product</div><div class="ci-val"><a href="https://jarvis-ai-3ba39.web.app">jarvis-ai-3ba39.web.app</a></div></div>
-        </div>
-      </div>
-      <div style="margin-top:44px;text-align:center">
-        <a href="mailto:mokshithreddysingana@gmail.com" class="cta blue-btn">TRANSMIT MESSAGE ↗</a>
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<!-- Side nav dots -->
-<div class="nav-dots" id="navDots">
-  <div class="dot on"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-</div>
-
-<!-- Scroll hint -->
-<div class="hint" id="hint">
-  <span>SCROLL TO EXPLORE</span>
-  <div class="hint-bar"><div class="hint-fill" id="hintFill"></div></div>
+  <div class="glass-panel">
+    <div class="label">SYSTEM ONLINE // JARVIS PROTOCOL</div>
+    <h1>MOKSHITH REDDY<br>JARVIS AI CORE</h1>
+    <p>
+      Personal AI command system. Built to execute intent, orchestrate models, and turn conversation into automated action. This is the central hub.
+    </p>
+    <a href="https://jarvis-ai-3ba39.web.app" class="link-btn">ENTER THE PORTAL ↗</a>
+  </div>
 </div>
 
 <script>
-  const dots   = document.querySelectorAll('.dot');
-  const hint   = document.getElementById('hint');
-  const fill   = document.getElementById('hintFill');
-  const VH     = () => window.innerHeight;
-  const total  = () => document.body.scrollHeight - VH();
-
-  function onScroll() {
-    const y   = window.scrollY;
-    const t   = total();
-    const pct = t > 0 ? y / t : 0;
-
-    // scroll bar
-    fill.style.width = Math.min(100, pct * 100) + '%';
-
-    // hide hint after half section
-    if (y > VH() * 0.45) hint.classList.add('gone');
-    else hint.classList.remove('gone');
-
-    // active dot
-    const sec = Math.min(dots.length - 1, Math.floor(y / VH()));
-    dots.forEach((d, i) => d.classList.toggle('on', i === sec));
+  // Add floating sparks in 3D space
+  const reactor = document.getElementById('reactor');
+  for(let i=0; i<15; i++) {
+    let spark = document.createElement('div');
+    spark.className = 'spark';
+    // Random positions around the core
+    spark.style.left = (200 + Math.random() * 200) + 'px';
+    spark.style.top = (200 + Math.random() * 200) + 'px';
+    spark.style.transform = `translateZ(${Math.random() * 200}px)`;
+    spark.style.animationDelay = (Math.random() * 4) + 's';
+    reactor.appendChild(spark);
   }
-
-  let tick = false;
-  window.addEventListener('scroll', () => {
-    if (!tick) { requestAnimationFrame(() => { onScroll(); tick = false; }); tick = true; }
-  });
-
-  window.addEventListener('load', onScroll);
 </script>
+
 </body>
 </html>
