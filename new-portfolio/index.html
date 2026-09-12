@@ -66,10 +66,11 @@ h1 .accent-blue{background:linear-gradient(135deg,var(--blue-bright),var(--blue)
 .primary:hover{box-shadow:0 0 35px rgba(255,45,60,.5)}
 .secondary{color:var(--ink);background:var(--card);border:1.5px solid rgba(255,59,78,.35);box-shadow:inset 0 0 20px rgba(255,59,78,.05)}
 .secondary:hover{background:rgba(255,59,78,.12);box-shadow:0 0 30px rgba(255,59,78,.2)}
-/* Hero visual — film grade sphere / spotlight */
-.scene{position:relative;height:clamp(300px,42vw,460px);overflow:hidden;border-radius:24px;border:1px solid rgba(255,59,78,.18);background:radial-gradient(circle at 50% 40%,rgba(120,0,24,.55),rgba(8,3,6,.9) 75%);box-shadow:0 0 80px rgba(0,0,0,.45),inset 0 0 80px rgba(120,0,24,.15)}
-.scene:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,rgba(255,90,70,.18),transparent 45%);animation:spotPulse 5s ease-in-out infinite}
-@keyframes spotPulse{0%,100%{opacity:.6}50%{opacity:1}}
+/* Hero visual — film still / spotlight */
+.scene{position:relative;height:clamp(300px,42vw,460px);overflow:hidden;border-radius:24px;border:1px solid rgba(255,59,78,.18);box-shadow:0 0 80px rgba(0,0,0,.45),inset 0 0 80px rgba(120,0,24,.15)}
+.scene img.hero{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.12) contrast(1.08)}
+.scene:before{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(circle at 50% 38%,rgba(255,90,70,.14),transparent 55%),linear-gradient(180deg,rgba(11,5,8,.25),transparent 35%,rgba(11,5,8,.5));pointer-events:none;animation:spotPulse 5s ease-in-out infinite}
+@keyframes spotPulse{0%,100%{opacity:.7}50%{opacity:1}}
 .ball{position:absolute;border-radius:50%;animation:floatBall 8s ease-in-out infinite alternate}
 .ball.s1{width:min(300px,62%);aspect-ratio:1;left:16%;top:16%;background:radial-gradient(circle at 32% 26%,#fff 0%,#ffd9dd 10%,#780018 52%,#3a000c 82%,#1b0005 100%);box-shadow:0 0 60px rgba(120,0,24,.5);animation-duration:7.2s}
 .ball.s2{width:min(130px,26%);aspect-ratio:1;left:60%;top:52%;background:radial-gradient(circle at 32% 26%,#fff 0%,#ffc9cf 12%,#B3122E 55%,#5c0012 85%);box-shadow:0 0 40px rgba(179,18,46,.45);animation-duration:9s;animation-delay:.7s}
@@ -151,10 +152,10 @@ h3{color:var(--ink);font-size:20px}
       <div class="actions"><a class="action primary" href="#work">Explore work</a><a class="action secondary" href="#about">About me</a></div>
       <div class="chip">STARRING <i>MOKSHITH REDDY</i> · DIRECTED BY AI <span style="color:var(--accent)">●</span> JARVIS</div>
     </div>
-    <div class="scene copy d2" data-parallax="-0.05" aria-label="Cinematic glow sphere visualization">
+    <div class="scene copy d2" data-parallax="-0.05" aria-label="Cinematic hero shot from the film">
+      <img class="hero" src="hero_film.jpg" alt="Mokshith Reddy — cinematic hero shot">
       <div class="hud-label t">MOKSHITH REDDY / CREATOR</div>
-      <div class="hud-label b">A SHORT FILM IN PROGRESS</div>
-      <div class="ball s1"></div><div class="ball s2"></div><div class="ball s3"></div>
+      <div class="hud-label b">TITLE SHOT · ANDREW STYLE HERO</div>
     </div>
   </div>
   <div class="scrollmark">Scroll to explore</div>
