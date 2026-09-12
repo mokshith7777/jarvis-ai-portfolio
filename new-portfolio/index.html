@@ -124,6 +124,18 @@ h3{color:var(--ink);font-size:20px}
 .progress span.on{height:36px;background:var(--accent);box-shadow:0 0 13px var(--red-glow)}
 .chip{display:inline-block;margin-top:26px;padding:12px 18px;border-radius:var(--pill);background:var(--card);border:1px solid rgba(255,59,78,.25);font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--ink)}
 .chip i{font-style:normal;color:var(--accent)}
+/* Fullscreen film intro overlay */
+.intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity 1.2s ease,visibility 1.2s}
+.intro video{width:100%;height:100%;object-fit:cover}
+.intro.done{opacity:0;visibility:hidden;pointer-events:none}
+.intro .i-top{position:absolute;top:0;left:0;right:0;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;z-index:2;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.intro .i-top .brand{font-weight:800}
+.intro .i-top button{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:100px;cursor:pointer;font-family:inherit;transition:.3s}
+.intro .i-top button:hover{background:rgba(255,255,255,.15)}
+.intro .i-bottom{position:absolute;bottom:0;left:0;right:0;padding:18px 24px;z-index:2;display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+@media(max-width:600px){.intro .i-top .brand{font-size:10px}}
+@media (prefers-reduced-motion:reduce){.intro{display:none}}
+@media(min-width:901px){.intro{margin:0}}
 @media(max-width:900px){.nav{display:none}.menu{display:block}.hero{grid-template-columns:1fr}.scene{height:300px;order:-1}.split,.creator{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:45px 1fr}.tag{display:none}.contact{grid-template-columns:1fr}}
 @media(max-width:600px){section{padding-left:22px;padding-right:22px}.progress{right:9px}.scrollmark{display:none}h1{font-size:clamp(40px,14vw,64px)}h2{font-size:clamp(34px,12vw,58px)}.stats{margin-top:30px}.stat{padding:16px 12px}.stat strong{font-size:26px}.arsenal{grid-template-columns:1fr}.scene{height:250px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ambient,.orb,.cinema:after{animation:none!important;opacity:1!important;transform:none!important}.copy{opacity:1;transform:none;transition:none}.tilt-in,.tilt-in-reverse,.line-reveal,.kicker,.tag{opacity:1;transform:none;transition:none}.project,.arsenal div{transform:none!important;transition:none}.ball{animation:none!important}}
@@ -134,6 +146,12 @@ h3{color:var(--ink);font-size:20px}
 <div class="filmline t" aria-hidden="true"></div>
 <div class="filmline b" aria-hidden="true"></div>
 <div class="ambient" aria-hidden="true"><div class="orb red"></div><div class="orb blue"></div></div>
+<div class="intro" id="introOverlay" aria-hidden="true">
+  <video id="introVideo" src="mokshith_portfolio_reel.mp4" preload="auto" muted playsinline></video>
+  <div class="i-top"><span class="brand">MOKSHITH <span style="color:var(--accent)">/</span> CREATOR</span><button id="introBtn">Skip ▸</button></div>
+  <div class="i-bottom"><span>AN ORDINARY KID FIRST</span><span>▶ TAP FOR SOUND</span></div>
+</div>
+<div id="introSrcLink"><a href="mokshith_portfolio_reel.mp4" download style="display:none">film</a></div>
 <header class="topbar" id="topbar">
   <div class="brand">MOKSHITH <span style="color:var(--accent)">/</span> CREATOR</div>
   <nav class="nav" aria-label="Primary">
@@ -239,6 +257,17 @@ if(!reduce){let ticking=false;const tick=()=>{const vh=innerHeight;parallax.forE
 addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(tick);ticking=true}},{passive:true});tick();
 addEventListener('pointermove',e=>{const x=(e.clientX/innerWidth-.5)*2,y=(e.clientY/innerHeight-.5)*2;interactive.forEach((el,i)=>{const f=i%2?.8:1;el.style.setProperty('--mx',`${x*f*4}px`);el.style.setProperty('--my',`${y*f*3}px`)})},{passive:true})}})();
 (()=>{const m=document.querySelector('.menu'),n=document.querySelector('.nav');if(m)m.addEventListener('click',()=>{n.style.display=n.style.display==='flex'?'none':'flex';n.style.flexDirection='column';n.style.alignItems='flex-end';n.style.position='absolute';n.style.top='64px';n.style.right='22px';n.style.background='rgba(11,5,8,.95)';n.style.padding='18px 22px';n.style.borderRadius='16px';n.style.boxShadow='0 12px 40px rgba(0,0,0,.4)'})})();
+(()=>{const ov=document.getElementById('introOverlay'),vid=document.getElementById('introVideo'),btn=document.getElementById('introBtn');if(!ov||!vid)return;let unmuted=false,fired=false;
+const end=()=>{if(fired)return;fired=true;ov.classList.add('done')};
+const count=()=>{if(vid.currentTime>=17.5)end()};
+vid.addEventListener('ended',end);
+vid.addEventListener('timeupdate',count,{passive:true});
+setTimeout(()=>{if(vid.readyState>=2&&vid.paused){vid.play().catch(()=>{})}},300);
+ov.addEventListener('pointerdown',()=>{if(unmuted)return;unmuted=true;vid.muted=false;vid.play().catch(()=>{});const b=btn.textContent;btn.textContent='Skip ▸'},
+{once:false});
+btn.addEventListener('click',e=>{e.stopPropagation();end()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')end()});
+setTimeout(()=>{if(!fired&&!unmuted)end()},21000)})();
 </script>
 </body>
 </html>
