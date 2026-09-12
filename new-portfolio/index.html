@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
 <style>
 :root{--red:#FF2D2D;--red-hot:#FF4D4D;--red-deep:#CC0A0A;--blue:#00C8FF;--blue-bright:#3DE8FF;--blue-deep:#0088CC;--bg:#0B0508;--bg2:#140811;--ink:#F5E8EC;--ink-soft:#C9A8B4;--accent:#FF3B4E;--accent2:#FF6B3D;--surface:#170A10;--card:rgba(23,10,16,.55);--white:#FFFFFF;--red-glow:rgba(255,45,45,.45);--blue-glow:rgba(0,200,255,.4);--pill:100px;--radius:20px;--max:1180px}
 *{box-sizing:border-box;margin:0;padding:0}html{background:var(--bg);scroll-behavior:smooth}body{min-height:100%;overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}button,a{-webkit-tap-highlight-color:transparent}::selection{background:rgba(255,45,45,.35);color:#fff}
@@ -52,8 +55,18 @@ main{position:relative;z-index:10}section{min-height:96svh;position:relative;pad
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}.d6{transition-delay:.6s}.d7{transition-delay:.7s}
 .kicker{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:12px;opacity:0;transform:perspective(1200px) translateX(-40px) translateZ(0);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform 1s cubic-bezier(.22,.61,.36,1);will-change:transform,opacity}
 .visible .kicker,.copy.visible .kicker{opacity:1;transform:perspective(1200px) translateX(0) translateZ(0)}
-/* Hero — film title as hero */
-.hero{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(30px,5vw,80px);align-items:center}
+/* Hero — 3D cinematic scene behind text */
+#home{overflow:hidden}
+#hero3d{position:absolute;inset:0;z-index:1}
+#hero3d canvas{display:block;width:100%;height:100%}
+#home .inner{z-index:3}
+#home .inner:before{content:"";position:absolute;top:-25%;bottom:-25%;left:-45%;width:115%;background:linear-gradient(90deg,rgba(11,5,8,.94),rgba(11,5,8,.6) 46%,transparent 76%);pointer-events:none;z-index:0}
+.hero{display:block;position:relative;z-index:2;pointer-events:none;max-width:min(720px,100%)}
+.hero .action,.hero a{pointer-events:auto}
+.hero .copy{max-width:660px}
+.hud-label{position:absolute;z-index:4;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#c9a8b4;font-weight:600}
+.hud-label.t{top:clamp(24px,4vw,44px);left:clamp(22px,4vw,65px)}
+.hud-label.b{bottom:clamp(24px,4vw,40px);right:clamp(22px,4vw,65px)}
 h1{font-weight:900;letter-spacing:-.045em;line-height:.9;color:var(--ink);text-wrap:balance;font-size:clamp(44px,7.4vw,94px)}
 h1 .accent-red{background:linear-gradient(135deg,#fff 0%,var(--accent) 40%,#B3122E 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 18px rgba(255,45,60,.35))}
 h1 .accent-blue{background:linear-gradient(135deg,var(--blue-bright),var(--blue),var(--blue-deep));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px rgba(0,200,255,.25))}
@@ -66,18 +79,8 @@ h1 .accent-blue{background:linear-gradient(135deg,var(--blue-bright),var(--blue)
 .primary:hover{box-shadow:0 0 35px rgba(255,45,60,.5)}
 .secondary{color:var(--ink);background:var(--card);border:1.5px solid rgba(255,59,78,.35);box-shadow:inset 0 0 20px rgba(255,59,78,.05)}
 .secondary:hover{background:rgba(255,59,78,.12);box-shadow:0 0 30px rgba(255,59,78,.2)}
-/* Hero visual — film still / spotlight */
-.scene{position:relative;height:clamp(300px,42vw,460px);overflow:hidden;border-radius:24px;border:1px solid rgba(255,59,78,.18);box-shadow:0 0 80px rgba(0,0,0,.45),inset 0 0 80px rgba(120,0,24,.15)}
-.scene img.hero{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.12) contrast(1.08)}
-.scene:before{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(circle at 50% 38%,rgba(255,90,70,.14),transparent 55%),linear-gradient(180deg,rgba(11,5,8,.25),transparent 35%,rgba(11,5,8,.5));pointer-events:none;animation:spotPulse 5s ease-in-out infinite}
-@keyframes spotPulse{0%,100%{opacity:.7}50%{opacity:1}}
-.ball{position:absolute;border-radius:50%;animation:floatBall 8s ease-in-out infinite alternate}
-.ball.s1{width:min(300px,62%);aspect-ratio:1;left:16%;top:16%;background:radial-gradient(circle at 32% 26%,#fff 0%,#ffd9dd 10%,#780018 52%,#3a000c 82%,#1b0005 100%);box-shadow:0 0 60px rgba(120,0,24,.5);animation-duration:7.2s}
-.ball.s2{width:min(130px,26%);aspect-ratio:1;left:60%;top:52%;background:radial-gradient(circle at 32% 26%,#fff 0%,#ffc9cf 12%,#B3122E 55%,#5c0012 85%);box-shadow:0 0 40px rgba(179,18,46,.45);animation-duration:9s;animation-delay:.7s}
-.ball.s3{width:min(64px,13%);aspect-ratio:1;left:34%;top:70%;background:radial-gradient(circle at 30% 25%,#fff 0%,#ffdde0 14%,#c9184a 58%,#6b0018 88%);box-shadow:0 0 30px rgba(201,24,74,.5);animation-duration:6s;animation-delay:1.3s}
-@keyframes floatBall{from{transform:translateY(-10px)}to{transform:translateY(14px)}}
-.hud-label{position:absolute;z-index:4;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#c9a8b4;font-weight:600}
-.hud-label.t{top:16px;left:20px}.hud-label.b{bottom:16px;right:20px}
+.chip{display:inline-block;margin-top:26px;padding:12px 18px;border-radius:var(--pill);background:var(--card);border:1px solid rgba(255,59,78,.25);font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--ink)}
+.chip i{font-style:normal;color:var(--accent)}
 .menu{display:none;background:none;border:none;color:var(--ink);font-size:20px;cursor:pointer}
 h2{font-weight:800;letter-spacing:-.05em;text-transform:uppercase;line-height:.92;color:var(--ink);text-wrap:balance;font-size:clamp(40px,6.2vw,86px)}
 h3{color:var(--ink);font-size:20px}
@@ -122,23 +125,9 @@ h3{color:var(--ink);font-size:20px}
 .progress{position:fixed;z-index:50;right:18px;top:50%;transform:translateY(-50%);display:grid;gap:8px}
 .progress span{width:3px;height:24px;background:rgba(255,255,255,.12);border-radius:4px;transition:.3s}
 .progress span.on{height:36px;background:var(--accent);box-shadow:0 0 13px var(--red-glow)}
-.chip{display:inline-block;margin-top:26px;padding:12px 18px;border-radius:var(--pill);background:var(--card);border:1px solid rgba(255,59,78,.25);font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--ink)}
-.chip i{font-style:normal;color:var(--accent)}
-/* Fullscreen film intro overlay */
-.intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity 1.2s ease,visibility 1.2s}
-.intro video{width:100%;height:100%;object-fit:cover;object-position:center}
-.intro.done{opacity:0;visibility:hidden;pointer-events:none}
-.intro .i-top{position:absolute;top:0;left:0;right:0;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;z-index:2;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
-.intro .i-top .brand{font-weight:800}
-.intro .i-top button{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:100px;cursor:pointer;font-family:inherit;transition:.3s}
-.intro .i-top button:hover{background:rgba(255,255,255,.15)}
-.intro .i-bottom{position:absolute;bottom:0;left:0;right:0;padding:18px 24px;z-index:2;display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
-@media(max-width:600px){.intro .i-top .brand{font-size:10px}}
-@media (prefers-reduced-motion:reduce){.intro{display:none}}
-@media(min-width:901px){.intro{margin:0}}
-@media(max-width:900px){.nav{display:none}.menu{display:block}.hero{grid-template-columns:1fr}.scene{height:300px;order:-1}.split,.creator{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:45px 1fr}.tag{display:none}.contact{grid-template-columns:1fr}}
-@media(max-width:600px){section{padding-left:22px;padding-right:22px}.progress{right:9px}.scrollmark{display:none}h1{font-size:clamp(40px,14vw,64px)}h2{font-size:clamp(34px,12vw,58px)}.stats{margin-top:30px}.stat{padding:16px 12px}.stat strong{font-size:26px}.arsenal{grid-template-columns:1fr}.scene{height:250px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ambient,.orb,.cinema:after{animation:none!important;opacity:1!important;transform:none!important}.copy{opacity:1;transform:none;transition:none}.tilt-in,.tilt-in-reverse,.line-reveal,.kicker,.tag{opacity:1;transform:none;transition:none}.project,.arsenal div{transform:none!important;transition:none}.ball{animation:none!important}}
+@media(max-width:900px){.nav{display:none}.menu{display:block}.split,.creator{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:45px 1fr}.tag{display:none}.contact{grid-template-columns:1fr}}
+@media(max-width:600px){section{padding-left:22px;padding-right:22px}.progress{right:9px}.scrollmark{display:none}h1{font-size:clamp(40px,14vw,64px)}h2{font-size:clamp(34px,12vw,58px)}.stats{margin-top:30px}.stat{padding:16px 12px}.stat strong{font-size:26px}.arsenal{grid-template-columns:1fr}.hero .lede{max-width:100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ambient,.orb,.cinema:after{animation:none!important;opacity:1!important;transform:none!important}.copy{opacity:1;transform:none;transition:none}.tilt-in,.tilt-in-reverse,.line-reveal,.kicker,.tag{opacity:1;transform:none;transition:none}.project,.arsenal div{transform:none!important;transition:none}}
 </style>
 </head>
 <body>
@@ -146,16 +135,6 @@ h3{color:var(--ink);font-size:20px}
 <div class="filmline t" aria-hidden="true"></div>
 <div class="filmline b" aria-hidden="true"></div>
 <div class="ambient" aria-hidden="true"><div class="orb red"></div><div class="orb blue"></div></div>
-<div class="intro" id="introOverlay" aria-hidden="true">
-  <video id="introVideo" preload="auto" muted playsinline>
-    <source src="mokshith_portfolio_reel_rotated.mp4" media="(max-width: 767px) and (orientation: portrait)">
-    <source src="mokshith_portfolio_reel.mp4" media="(min-width: 768px) and (orientation: landscape)">
-    <source src="mokshith_portfolio_reel.mp4">
-  </video>
-  <div class="i-top"><span class="brand">MOKSHITH <span style="color:var(--accent)">/</span> CREATOR</span><button id="introBtn">Skip ▸</button></div>
-  <div class="i-bottom"><span>AN ORDINARY KID FIRST</span><span>▶ TAP FOR SOUND</span></div>
-</div>
-<div id="introSrcLink"><a href="mokshith_portfolio_reel.mp4" download style="display:none">film</a></div>
 <header class="topbar" id="topbar">
   <div class="brand">MOKSHITH <span style="color:var(--accent)">/</span> CREATOR</div>
   <nav class="nav" aria-label="Primary">
@@ -166,18 +145,16 @@ h3{color:var(--ink);font-size:20px}
 <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 <main>
 <section id="home">
+  <div id="hero3d" aria-hidden="true"></div>
+  <div class="hud-label t" aria-hidden="true">REALTIME 3D /* WEBGL</div>
+  <div class="hud-label b" aria-hidden="true">MOKSHITH REDDY · ORIGIN PROTOCOL</div>
   <div class="inner hero">
     <div class="copy d1" data-parallax="0.03">
       <div class="kicker">01 / ORIGIN PROTOCOL</div>
       <h1>AN ORDINARY KID<br><span class="accent-red">BUILDING</span><br>EXTRAORDINARY<br>THINGS.</h1>
       <p class="lede">Mokshith Reddy Singana builds AI assistants, web applications, games and cinematic interfaces — navigating classes, friendships and the weight of extraordinary expectations.</p>
       <div class="actions"><a class="action primary" href="#work">Explore work</a><a class="action secondary" href="#about">About me</a></div>
-      <div class="chip">STARRING <i>MOKSHITH REDDY</i> · DIRECTED BY AI <span style="color:var(--accent)">●</span> JARVIS</div>
-    </div>
-    <div class="scene copy d2" data-parallax="-0.05" aria-label="Cinematic hero shot from the film">
-      <img class="hero" src="hero_film.jpg" alt="Mokshith Reddy — cinematic hero shot">
-      <div class="hud-label t">MOKSHITH REDDY / CREATOR</div>
-      <div class="hud-label b">TITLE SHOT · ANDREW STYLE HERO</div>
+      <div class="chip">REALTIME 3D · SCROLL-DRIVEN <span style="color:var(--accent)">●</span> POWERED BY JARVIS</div>
     </div>
   </div>
   <div class="scrollmark">Scroll to explore</div>
@@ -247,7 +224,7 @@ h3{color:var(--ink);font-size:20px}
       <a href="https://jarvis-ai-3ba39.web.app" target="_blank" rel="noopener"><small>Product</small><b>jarvis-ai-3ba39.web.app</b></a>
     </div>
     <div class="actions copy d3"><a class="action primary" href="mailto:mokshithreddysingana@gmail.com">Transmit message ↗</a></div>
-    <div style="margin-top:34px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9c7486">Mokshith Reddy Singana © 2026 · A film in progress · Powered by JARVIS AI</div>
+    <div style="margin-top:34px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9c7486">Mokshith Reddy Singana © 2026 · Realtime 3D · Powered by JARVIS AI</div>
   </div>
 </section>
 </main>
@@ -261,17 +238,68 @@ if(!reduce){let ticking=false;const tick=()=>{const vh=innerHeight;parallax.forE
 addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(tick);ticking=true}},{passive:true});tick();
 addEventListener('pointermove',e=>{const x=(e.clientX/innerWidth-.5)*2,y=(e.clientY/innerHeight-.5)*2;interactive.forEach((el,i)=>{const f=i%2?.8:1;el.style.setProperty('--mx',`${x*f*4}px`);el.style.setProperty('--my',`${y*f*3}px`)})},{passive:true})}})();
 (()=>{const m=document.querySelector('.menu'),n=document.querySelector('.nav');if(m)m.addEventListener('click',()=>{n.style.display=n.style.display==='flex'?'none':'flex';n.style.flexDirection='column';n.style.alignItems='flex-end';n.style.position='absolute';n.style.top='64px';n.style.right='22px';n.style.background='rgba(11,5,8,.95)';n.style.padding='18px 22px';n.style.borderRadius='16px';n.style.boxShadow='0 12px 40px rgba(0,0,0,.4)'})})();
-(()=>{const ov=document.getElementById('introOverlay'),vid=document.getElementById('introVideo'),btn=document.getElementById('introBtn');if(!ov||!vid)return;let unmuted=false,fired=false;
-const end=()=>{if(fired)return;fired=true;ov.classList.add('done')};
-const count=()=>{if(vid.currentTime>=17.5)end()};
-vid.addEventListener('ended',end);
-vid.addEventListener('timeupdate',count,{passive:true});
-setTimeout(()=>{if(vid.readyState>=2&&vid.paused){vid.play().catch(()=>{})}},300);
-ov.addEventListener('pointerdown',()=>{if(unmuted)return;unmuted=true;vid.muted=false;vid.play().catch(()=>{});const b=btn.textContent;btn.textContent='Skip ▸'},
-{once:false});
-btn.addEventListener('click',e=>{e.stopPropagation();end()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')end()});
-setTimeout(()=>{if(!fired&&!unmuted)end()},21000)})();
+(async()=>{try{
+const wrap=document.getElementById('hero3d');if(!wrap)return;
+let gl=false;try{gl=!!(window.WebGLRenderingContext&&document.createElement('canvas').getContext('webgl'));}catch(e){}
+if(!gl)return;
+const reduce=(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)||false;
+const THREE=await import('three');
+const {EffectComposer}=await import('three/addons/postprocessing/EffectComposer.js');
+const {RenderPass}=await import('three/addons/postprocessing/RenderPass.js');
+const {UnrealBloomPass}=await import('three/addons/postprocessing/UnrealBloomPass.js');
+const {OutputPass}=await import('three/addons/postprocessing/OutputPass.js');
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+wrap.appendChild(renderer.domElement);
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x0B0508);
+scene.fog=new THREE.FogExp2(0x0B0508,0.045);
+const camera=new THREE.PerspectiveCamera(55,1,0.1,100);
+camera.position.set(0,0.2,7);
+scene.add(new THREE.AmbientLight(0xffffff,.25));
+const redL=new THREE.PointLight(0xff3b4e,60,14);redL.position.set(4,2.5,4);scene.add(redL);
+const blueL=new THREE.PointLight(0x00c8ff,55,14);blueL.position.set(-4,-2,3);scene.add(blueL);
+const dirL=new THREE.DirectionalLight(0xffffff,.5);dirL.position.set(1,3,2);scene.add(dirL);
+const core=new THREE.Group();
+const ring=new THREE.Mesh(new THREE.TorusGeometry(1.7,.07,24,120),new THREE.MeshStandardMaterial({color:0x3a000c,emissive:0xff3b4e,emissiveIntensity:2,metalness:.6,roughness:.3}));
+core.add(ring);
+const inner=new THREE.Mesh(new THREE.IcosahedronGeometry(.85,1),new THREE.MeshStandardMaterial({color:0x00222e,emissive:0x00c8ff,emissiveIntensity:1.4,wireframe:true}));
+core.add(inner);
+const heart=new THREE.Mesh(new THREE.SphereGeometry(.42,32,32),new THREE.MeshStandardMaterial({color:0x5a0000,emissive:0xff3b4e,emissiveIntensity:2.6}));
+core.add(heart);
+const ringA=new THREE.Mesh(new THREE.TorusGeometry(2.5,.018,8,140),new THREE.MeshStandardMaterial({color:0x1a0000,emissive:0xff3b4e,emissiveIntensity:1.6}));
+ringA.rotation.x=Math.PI/2.2;core.add(ringA);
+const ringB=new THREE.Mesh(new THREE.TorusGeometry(3.2,.014,8,160),new THREE.MeshStandardMaterial({color:0x001018,emissive:0x00c8ff,emissiveIntensity:1.2}));
+ringB.rotation.z=.9;core.add(ringB);
+scene.add(core);
+const N=1500,pos=new Float32Array(N*3),col=new Float32Array(N*3);
+const cA=new THREE.Color(0xff3b4e),cB=new THREE.Color(0x00c8ff),cC=new THREE.Color(0x8a5a70);
+for(let i=0;i<N;i++){const r=3.5+Math.random()*5.5,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th)*.7;pos[i*3+2]=r*Math.cos(ph);const c=Math.random(),cc=c<.55?cA:c<.85?cB:cC;col[i*3]=cc.r;col[i*3+1]=cc.g;col[i*3+2]=cc.b;}
+const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));pGeo.setAttribute('color',new THREE.BufferAttribute(col,3));
+const pMat=new THREE.PointsMaterial({size:.03,vertexColors:true,transparent:true,opacity:.9,depthWrite:false,blending:THREE.AdditiveBlending});
+const points=new THREE.Points(pGeo,pMat);scene.add(points);
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(1,1),1.1,.75,.18));
+composer.addPass(new OutputPass());
+function size(){const w=wrap.clientWidth||1,h=wrap.clientHeight||1;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);composer.setSize(w,h);}
+addEventListener('resize',size);size();
+const mouse={x:0,y:0};
+addEventListener('pointermove',e=>{mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=(e.clientY/innerHeight)*2-1},{passive:true});
+let visible=true;new IntersectionObserver(en=>en.forEach(x=>visible=x.isIntersecting),{threshold:0}).observe(wrap);
+const clock=new THREE.Clock();
+const frame=()=>{requestAnimationFrame(frame);if(!visible)return;const t=clock.getElapsedTime();
+core.rotation.y=t*.25;core.rotation.x=Math.sin(t*.15)*.08;
+inner.rotation.y=-t*.5;inner.rotation.x=t*.2;
+ringA.rotation.z=t*.4;ringB.rotation.x=t*.3+.9;
+points.rotation.y=t*.02;points.rotation.x=Math.sin(t*.012)*.05;
+camera.position.x+=(mouse.x*.7-camera.position.x)*.045;
+camera.position.y+=(.2-mouse.y*.45-camera.position.y)*.045;
+camera.position.z=7+Math.min(scrollY*.004,2.2);
+camera.lookAt(0,0,0);
+composer.render();};
+if(reduce){renderer.render(scene,camera);}else{frame();}
+}catch(e){if(window.console)console.warn('3D hero disabled:',e&&e.message||e)}})();
 </script>
 </body>
 </html>
