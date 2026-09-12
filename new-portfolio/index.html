@@ -126,7 +126,7 @@ h3{color:var(--ink);font-size:20px}
 .chip i{font-style:normal;color:var(--accent)}
 /* Fullscreen film intro overlay */
 .intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity 1.2s ease,visibility 1.2s}
-.intro video{width:100%;height:100%;object-fit:cover}
+.intro video{width:100%;height:100%;object-fit:cover;object-position:center}
 .intro.done{opacity:0;visibility:hidden;pointer-events:none}
 .intro .i-top{position:absolute;top:0;left:0;right:0;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;z-index:2;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
 .intro .i-top .brand{font-weight:800}
@@ -147,7 +147,11 @@ h3{color:var(--ink);font-size:20px}
 <div class="filmline b" aria-hidden="true"></div>
 <div class="ambient" aria-hidden="true"><div class="orb red"></div><div class="orb blue"></div></div>
 <div class="intro" id="introOverlay" aria-hidden="true">
-  <video id="introVideo" src="mokshith_portfolio_reel.mp4" preload="auto" muted playsinline></video>
+  <video id="introVideo" preload="auto" muted playsinline>
+    <source src="mokshith_portfolio_reel_portrait.mp4" media="(max-width: 767px) and (orientation: portrait)">
+    <source src="mokshith_portfolio_reel.mp4" media="(min-width: 768px) and (orientation: landscape)">
+    <source src="mokshith_portfolio_reel.mp4">
+  </video>
   <div class="i-top"><span class="brand">MOKSHITH <span style="color:var(--accent)">/</span> CREATOR</span><button id="introBtn">Skip ▸</button></div>
   <div class="i-bottom"><span>AN ORDINARY KID FIRST</span><span>▶ TAP FOR SOUND</span></div>
 </div>
