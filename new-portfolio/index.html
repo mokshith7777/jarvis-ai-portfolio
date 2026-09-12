@@ -100,70 +100,54 @@ h3{color:var(--ink);font-size:20px}
 .arsenal{display:grid;grid-template-columns:repeat(2,1fr);margin-top:35px;border-top:1px solid rgba(255,59,78,.3);border-left:1px solid rgba(255,59,78,.3);background:var(--card);backdrop-filter:blur(8px)}
 .arsenal div{min-height:88px;padding:17px;border-right:1px solid rgba(255,59,78,.18);border-bottom:1px solid rgba(255,59,78,.18);transition:transform .8s cubic-bezier(.22,.61,.36,1),background .3s,opacity .8s}
 .arsenal small{color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.12em}
-.arsenal b{display:block;margin-top:7px;color:var(--ink);font-size:18px;font-weight:700}
-.projects{display:grid;gap:14px;margin-top:40px}
-.project{display:grid;grid-template-columns:72px 1fr auto;gap:20px;align-items:center;padding:22px;border:1px solid rgba(255,59,78,.2);background:var(--card);border-radius:var(--radius);transition:.35s;transform:translate3d(var(--mx,0),var(--my,0),0)}
-.project:hover{border-color:var(--accent);background:rgba(255,59,78,.08);box-shadow:0 0 35px rgba(255,59,78,.12)}
-.project .num{color:var(--accent);font-size:11px;letter-spacing:.12em;font-weight:700}
-.project p{margin-top:6px;color:#a98796;font-size:13px;line-height:1.6}
-.tag{font-size:9px;letter-spacing:.12em;color:var(--ink);text-transform:uppercase;border:1px solid rgba(255,59,78,.3);border-radius:100px;padding:8px 10px;opacity:0;transform:perspective(1200px) scale(.8) rotate(-40deg);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);will-change:transform,opacity}
-.copy.visible .tag{opacity:1;transform:perspective(1200px) scale(1) rotate(0deg)}
-.projects .project:nth-child(2) .tag{transition-delay:.15s}.projects .project:nth-child(3) .tag{transition-delay:.3s}
-.journey{margin-top:42px;position:relative}
-.track{position:absolute;left:18px;top:0;bottom:0;width:1px;background:linear-gradient(var(--accent),rgba(255,59,78,.1),transparent);box-shadow:0 0 12px rgba(255,59,78,.25)}
-.milestone{position:relative;padding-left:58px;margin-bottom:34px}
-.milestone:last-child{margin-bottom:0}
-.milestone:before{content:"";position:absolute;left:12px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 14px rgba(255,59,78,.55)}
-.milestone.blue:before{border-color:var(--blue);box-shadow:0 0 14px rgba(0,200,255,.5)}
-.milestone small{color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.15em}
+.arsenal b{display:block;margin-top:8px;font-size:15px}
+.projects{display:grid;gap:12px;margin-top:42px}
+.project{display:grid;grid-template-columns:60px 1fr auto;gap:18px;align-items:center;padding:24px 22px;border:1px solid rgba(255,59,78,.18);background:var(--card);backdrop-filter:blur(8px);transform:translate3d(var(--mx,0),var(--my,0),0);transition:background .3s,border .3s,transform .3s}
+.project:hover{background:rgba(255,59,78,.08);border-color:rgba(255,59,78,.38)}
+.project .num{font-size:12px;color:var(--accent);font-weight:800;letter-spacing:.14em}
+.project p{margin-top:8px;color:var(--ink-soft);font-size:13px;line-height:1.7;max-width:730px}
+.tag{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);border:1px solid rgba(255,59,78,.3);border-radius:100px;padding:8px 12px}
+.journey{position:relative;margin-top:55px;padding-left:34px}
+.track{position:absolute;left:7px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),rgba(0,200,255,.35),transparent)}
+.milestone{position:relative;padding:0 0 40px 28px}
+.milestone:before{content:"";position:absolute;left:-34px;top:0;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 15px var(--accent)}
+.milestone.blue:before{background:var(--blue);box-shadow:0 0 15px var(--blue)}
+.milestone small{font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--accent)}
 .milestone.blue small{color:var(--blue)}
-.milestone h3{margin-top:7px;color:var(--ink);font-size:22px}
-.milestone p{margin-top:7px;max-width:600px;font-size:14px;line-height:1.75;color:#a98796}
-.creator{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
-.creator-card{border-left:2px solid var(--accent);padding-left:25px}
-.creator-card p{font-size:17px;line-height:1.8;color:#C9A8B4}
-.signature{font-size:11px;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;margin-top:25px}
-.final{min-height:76svh;text-align:left}
-.contact{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.contact a{padding:20px;border:1px solid rgba(255,59,78,.2);border-radius:var(--radius);background:var(--card);text-decoration:none;transition:.3s}
-.contact a:hover{border-color:var(--accent);transform:translateY(-3px)}
-.contact small{display:block;color:#9c7486;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
-.contact b{display:block;margin-top:8px;color:var(--ink);font-size:13px;overflow-wrap:anywhere}
-.scrollmark{position:absolute;left:clamp(22px,4vw,65px);bottom:24px;color:#9c7486;font-size:10px;letter-spacing:.14em;writing-mode:vertical-rl;text-transform:uppercase}
-.scrollmark:after{content:"";display:block;height:50px;width:1px;margin:10px auto 0;background:linear-gradient(var(--accent),transparent);box-shadow:0 0 9px rgba(255,59,78,.35)}
-.progress{position:fixed;z-index:50;right:18px;top:50%;transform:translateY(-50%);display:grid;gap:8px}
-.progress span{width:3px;height:24px;background:rgba(255,255,255,.12);border-radius:4px;transition:.3s}
-.progress span.on{height:36px;background:var(--accent);box-shadow:0 0 13px var(--red-glow)}
-@media(max-width:900px){.nav{display:none}.menu{display:block}.split,.creator{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:45px 1fr}.tag{display:none}.contact{grid-template-columns:1fr}}
-@media(max-width:600px){section{padding-left:22px;padding-right:22px}.progress{right:9px}.scrollmark{display:none}h1{font-size:clamp(40px,14vw,64px)}h2{font-size:clamp(34px,12vw,58px)}.stats{margin-top:30px}.stat{padding:16px 12px}.stat strong{font-size:26px}.arsenal{grid-template-columns:1fr}.hero .lede{max-width:100%}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ambient,.orb,.cinema:after{animation:none!important;opacity:1!important;transform:none!important}.copy{opacity:1;transform:none;transition:none}.tilt-in,.tilt-in-reverse,.line-reveal,.kicker,.tag{opacity:1;transform:none;transition:none}.project,.arsenal div{transform:none!important;transition:none}}
+.milestone h3{margin-top:8px}
+.milestone p{margin-top:8px;color:var(--ink-soft);font-size:14px;line-height:1.75}
+.signature{margin-top:22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.contact{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:35px}
+.contact a{display:block;padding:18px;border:1px solid rgba(255,59,78,.2);background:var(--card);text-decoration:none}
+.contact small{display:block;color:var(--accent);font-size:10px;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.contact b{display:block;margin-top:8px;color:var(--ink);font-size:13px;word-break:break-word}
+.scrollmark{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9c7486}
+.progress{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:60;display:grid;gap:7px}
+.progress span{display:block;width:2px;height:18px;background:rgba(255,255,255,.16);transition:.3s}.progress span.on{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+@media(max-width:900px){.nav{display:none}.menu{display:block}.stats{grid-template-columns:repeat(2,1fr)}.project{grid-template-columns:40px 1fr}.tag{display:none}.contact{grid-template-columns:1fr}.progress{display:none}}
+@media(max-width:600px){section{padding-inline:18px}h1{font-size:clamp(42px,14vw,72px)}h2{font-size:clamp(38px,12vw,62px)}.lede{font-size:16px}.bodycopy{font-size:14px}.stats{grid-template-columns:1fr 1fr}.arsenal{grid-template-columns:1fr}.topbar{padding-inline:18px}}
 </style>
 </head>
 <body>
-<div class="cinema" aria-hidden="true"></div>
-<div class="filmline t" aria-hidden="true"></div>
-<div class="filmline b" aria-hidden="true"></div>
-<div class="ambient" aria-hidden="true"><div class="orb red"></div><div class="orb blue"></div></div>
+<div class="cinema"></div>
+<div class="ambient"><div class="orb red"></div><div class="orb blue"></div></div>
+<div class="filmline t"></div><div class="filmline b"></div>
 <header class="topbar" id="topbar">
-  <div class="brand">MOKSHITH <span style="color:var(--accent)">/</span> CREATOR</div>
-  <nav class="nav" aria-label="Primary">
-    <a href="#home">Home</a><a href="#about">About</a><a href="#work">Work</a><a href="#journey">Journey</a><a href="#contact">Contact</a><a class="log" href="https://jarvis-ai-3ba39.web.app" target="_blank" rel="noopener">Product ↗</a>
-  </nav>
-  <div style="display:flex;gap:14px;align-items:center"><span class="status"><i></i> ONLINE</span><button class="menu" aria-label="Menu">☰</button></div>
+  <div class="brand">MOKSHITH / JARVIS AI</div>
+  <nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#work">Work</a><a href="#journey">Journey</a><a href="#contact">Contact</a><span class="status"><i></i> Online</span></nav>
+  <button class="menu" aria-label="Open navigation">☰</button>
 </header>
 <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 <main>
 <section id="home">
-  <div id="hero3d" aria-hidden="true"></div>
-  <div class="hud-label t" aria-hidden="true">REALTIME 3D /* WEBGL</div>
-  <div class="hud-label b" aria-hidden="true">MOKSHITH REDDY · ORIGIN PROTOCOL</div>
-  <div class="inner hero">
-    <div class="copy d1" data-parallax="0.03">
-      <div class="kicker">01 / ORIGIN PROTOCOL</div>
-      <h1>AN ORDINARY KID<br><span class="accent-red">BUILDING</span><br>EXTRAORDINARY<br>THINGS.</h1>
-      <p class="lede">Mokshith Reddy Singana builds AI assistants, web applications, games and cinematic interfaces — navigating classes, friendships and the weight of extraordinary expectations.</p>
-      <div class="actions"><a class="action primary" href="#work">Explore work</a><a class="action secondary" href="#about">About me</a></div>
-      <div class="chip">REALTIME 3D · SCROLL-DRIVEN <span style="color:var(--accent)">●</span> POWERED BY JARVIS</div>
+  <div id="hero3d"></div>
+  <div class="inner">
+    <div class="hero">
+      <div class="copy d1"><div class="kicker">01 / CREATOR NODE</div>
+        <h1><span class="line-reveal">BUILDING</span><span class="line-reveal accent-red">INTELLIGENCE</span><span class="line-reveal">THAT MOVES.</span></h1>
+        <p class="lede">Creator &amp; AI builder crafting assistants, automation systems, cinematic interfaces and tools that turn ideas into working systems.</p>
+        <div class="actions"><a class="action primary" href="#work">Explore work</a><a class="action secondary" href="#about">About me</a></div>
+      </div>
     </div>
     <div class="avatar-wrap tilt-in">
       <div class="avatar-spot"></div>
@@ -201,7 +185,7 @@ h3{color:var(--ink);font-size:20px}
 <section id="work">
   <div class="inner">
     <div class="copy d1" data-parallax="0.03"><div class="kicker">03 / SELECTED WORK</div>
-      <h2><span class="line-reveal">SCENES I'VE <span class="accent-red">DIRECTED</span></span><br><span class="line-reveal">& PRODUCED</span></h2>
+      <h2><span class="line-reveal">SCENES I'VE <span class="accent-red">DIRECTED</span></span><br><span class="line-reveal">&amp; PRODUCED</span></h2>
       <p class="lede">A portfolio of AI systems, video pipelines and interfaces — each an experiment in what a personal command layer can do.</p>
     </div>
     <div class="projects">
@@ -240,7 +224,7 @@ h3{color:var(--ink);font-size:20px}
       <a href="https://jarvis-ai-3ba39.web.app" target="_blank" rel="noopener"><small>Product</small><b>jarvis-ai-3ba39.web.app</b></a>
     </div>
     <div class="actions copy d3"><a class="action primary" href="mailto:mokshithreddysingana@gmail.com">Transmit message ↗</a></div>
-    <div style="margin-top:34px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9c7486">Mokshith Reddy Singana © 2026 · Realtime 3D · Powered by JARVIS AI</div>
+    <div style="margin-top:34px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9c7486">Mokshith Reddy Singana © 2026 · Powered by JARVIS AI</div>
   </div>
 </section>
 </main>
